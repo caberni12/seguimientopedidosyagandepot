@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedido</title>
+    <title>Seguimiento de Pedido RM</title>
     <style>
         /* Estilo general de la página */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f7fb;
+            background-color: #d8d1d1;
             margin: 0;
             padding: 0;
         }
@@ -16,17 +16,18 @@
         h1 {
             text-align: center;
             font-size: 28px;
-            color: #333;
+            color: #000;
             margin-top: 40px;
             text-transform: uppercase;
         }
 
         .timeline-container {
-            width: 70%;
+            width: 90%;
+            max-width: 900px;
             margin: 40px auto;
-            background-color: #fff;
+            background-color: #f9f9fcf1;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(14, 13, 13, 0.1);
             padding: 20px;
         }
 
@@ -35,7 +36,7 @@
             padding: 10px 0;
         }
 
-        /* Línea vertical */
+        /* Línea vertical negra */
         .timeline::before {
             content: '';
             position: absolute;
@@ -43,14 +44,14 @@
             top: 0;
             width: 3px;
             height: 100%;
-            background-color: #ddd;
+            background-color: #0f0f0f; /* Negro */
             z-index: 0;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 50px;
-            padding-left: 40px;
+            margin-bottom: 100px; /* Aumentar el espacio entre los intervalos */
+            padding-left: 5px;
             z-index: 1;
         }
 
@@ -60,31 +61,32 @@
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            z-index: 2;
+            width: 20px;
+            height: 30px;
+            background-color: #09c541; /* Negro */
+            border-radius: 10%;
+            z-index: 1;
         }
 
         .timeline-content {
-            background-color: #fff;
+            background-color: #070707ee;
             padding: 15px 20px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             position: relative;
-            margin-left: 50px;
+            margin-left: -15px;
             z-index: 1;
         }
 
         .timeline-content h3 {
-            font-size: 18px;
+            font-size: 30px;
             font-weight: bold;
-            color: #333;
+            color: #0a0a0a; /* Negro */
             margin: 0 0 10px 0;
         }
 
         .timeline-content p {
-            color: #555;
+            color: #141414;
             margin: 0 0 10px;
             font-size: 16px;
             font-weight: 500;
@@ -95,45 +97,86 @@
             bottom: -35px;
             left: 10px;
             font-size: 14px;
-            color: #888;
+            color: #8d8b8b;
             padding: 8px 12px;
-            background-color: #f2f2f2;
+            background-color: #f1f0f3;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(15, 15, 15, 0.1);
+            border: 1px solid #161616;
             margin-top: 15px;
         }
 
-        .timeline-content p span {
-            font-weight: 600;
-        }
-
         .status-pedido {
-            background-color: #f0f8ff;
             padding: 10px;
             border-radius: 5px;
             font-size: 16px;
         }
 
         .entregado {
-            background-color: #dff0d8;
-            color: #3c763d;
+            background-color: #dff0d8; /* Verde */
+            color: #10e714;
         }
 
         .en-ruta {
-            background-color: #fcf8e3;
-            color: #8a6d3b;
+            background-color: #dff0d8; /* Fondo igual al de Estado del Pedido */
+            color: #f0110d; /* Rojo */
+        }
+
+        .pendiente {
+            background-color: #fcf8e3; /* Amarillo */
+            color: #e3f309;
+        }
+
+        /* Media Queries para mejorar la visualización en móviles */
+        @media (max-width: 768px) {
+            .timeline-container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+                padding-left: 20px;
+            }
+
+            .timeline::before {
+                left: 20px;
+                width: 3px;
+            }
+
+            .timeline-item::after {
+                left: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .timeline-content h3 {
+                font-size: 16px;
+            }
+
+            .timeline-content p {
+                font-size: 14px;
+            }
+
+            .date {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Seguimiento Pedido</h1>
+    <h1>Seguimiento Pedidos RM</h1>
 
     <div class="timeline-container">
         <div class="timeline">
             <!-- Estado de Pedido: En Ruta -->
             <div class="timeline-item en_ruta">
-                <div class="timeline-content">
+                <div class="timeline-content en-ruta">
                     <h3>Estado del Pedido: En Ruta</h3>
                     <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
                     <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
@@ -143,7 +186,6 @@
                     <p>CLIENTE: <span id="cliente"></span></p>
                     <p>BULTOS: <span id="bultos"></span></p>
                     <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
-                    <p>NUMERO DE SEGUIMIENTO: <span id="num_seguimiento"></span></p>
                     <p>TRANSPORTE: <span id="transporte"></span></p>
                     <p>STATUS PEDIDO: <span id="status_pedido"></span></p>
                     <p>DIRECCION: <span id="direccion"></span></p>
@@ -154,9 +196,8 @@
 
             <!-- Estado de Pedido: Entregado -->
             <div class="timeline-item entregado">
-                <div class="timeline-content">
+                <div class="timeline-content entregado">
                     <h3>Estado del Pedido: Entregado</h3>
-                    <p>OBSERVACIONES DE ENTREGA: <span id="observaciones_entrega"></span></p>
                     <p class="date">Fecha de Entrega: <span id="fecha_entrega"></span></p>
                 </div>
             </div>
@@ -176,14 +217,11 @@
                 cliente: urlParams.get('cliente'),
                 bultos: urlParams.get('bultos'),
                 responsable_entrega: urlParams.get('responsable_entrega'),
-                num_seguimiento: urlParams.get('num_seguimiento'),
                 transporte: urlParams.get('transporte'),
                 status_pedido: urlParams.get('status_pedido'),
                 direccion: urlParams.get('direccion'),
                 observaciones: urlParams.get('observaciones'),
-                fecha_actualizacion: urlParams.get('fecha_actualizacion'),
-                fecha_entrega: urlParams.get('fecha_entrega'),
-                observaciones_entrega: urlParams.get('observaciones_entrega')
+                fecha_entrega: urlParams.get('fecha_entrega')
             };
         }
 
@@ -200,14 +238,22 @@
             document.getElementById('cliente').textContent = params.cliente || '';
             document.getElementById('bultos').textContent = params.bultos || '';
             document.getElementById('responsable_entrega').textContent = params.responsable_entrega || '';
-            document.getElementById('num_seguimiento').textContent = params.num_seguimiento || '';
             document.getElementById('transporte').textContent = params.transporte || '';
             document.getElementById('status_pedido').textContent = params.status_pedido || '';
             document.getElementById('direccion').textContent = params.direccion || '';
             document.getElementById('observaciones').textContent = params.observaciones || '';
-            document.getElementById('fecha_actualizacion').textContent = params.fecha_actualizacion || '';
             document.getElementById('fecha_entrega').textContent = params.fecha_entrega || '';
-            document.getElementById('observaciones_entrega').textContent = params.observaciones_entrega || '';
+
+            // Cambiar el fondo según el estado del pedido
+            const status = params.status_pedido?.toLowerCase();
+            const timelineItem = document.querySelector('.timeline-item');
+            if (status === 'entregado') {
+                timelineItem.classList.add('entregado');
+            } else if (status === 'en ruta') {
+                timelineItem.classList.add('en-ruta');
+            } else {
+                timelineItem.classList.add('pendiente');
+            }
         }
 
         // Llamar a la función para actualizar los campos al cargar la página
