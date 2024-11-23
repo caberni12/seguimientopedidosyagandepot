@@ -108,6 +108,23 @@
             font-weight: 600;
         }
 
+        .status-pedido {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .entregado {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+
+        .en-ruta {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+        }
+
         /* Media Queries para diseño responsive */
         @media screen and (min-width: 1024px) {
             .timeline-container {
@@ -139,10 +156,10 @@
 
     <div class="timeline-container">
         <div class="timeline">
-            <!-- Item 1: En Ruta -->
+            <!-- Estado de Pedido: En Ruta -->
             <div class="timeline-item en_ruta">
                 <div class="timeline-content">
-                    <h3>Estado del Pedido</h3>
+                    <h3>Estado del Pedido: En Ruta</h3>
                     <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
                     <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
                     <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
@@ -160,12 +177,12 @@
                 </div>
             </div>
 
-            <!-- Item 2: Entregado -->
+            <!-- Estado de Pedido: Entregado -->
             <div class="timeline-item entregado">
                 <div class="timeline-content">
-                    <h3>PEDIDO ENTREGADO</h3>
-                    <p>OBSERVACIONES: <span id="observaciones_entrega"></span></p>
-                    <p class="date">Fecha de actualización: <span id="fecha_actualizacion_entrega"></span></p>
+                    <h3>Estado del Pedido: Entregado</h3>
+                    <p>OBSERVACIONES DE ENTREGA: <span id="observaciones_entrega"></span></p>
+                    <p class="date">Fecha de Entrega: <span id="fecha_entrega"></span></p>
                 </div>
             </div>
         </div>
@@ -191,7 +208,7 @@
                 observaciones: urlParams.get('observaciones'),
                 fecha_actualizacion: urlParams.get('fecha_actualizacion'),
                 observaciones_entrega: urlParams.get('observaciones_entrega'),
-                fecha_actualizacion_entrega: urlParams.get('fecha_actualizacion_entrega'),
+                fecha_entrega: urlParams.get('fecha_entrega'),
             };
         }
 
@@ -208,15 +225,4 @@
             document.getElementById('bultos').textContent = datos.bultos || 'N/A';
             document.getElementById('responsable_entrega').textContent = datos.responsable_entrega || 'N/A';
             document.getElementById('num_seguimiento').textContent = datos.num_seguimiento || 'N/A';
-            document.getElementById('transporte').textContent = datos.transporte || 'N/A';
-            document.getElementById('status_pedido').textContent = datos.status_pedido || 'N/A';
-            document.getElementById('direccion').textContent = datos.direccion || 'N/A';
-            document.getElementById('observaciones').textContent = datos.observaciones || 'N/A';
-            document.getElementById('fecha_actualizacion').textContent = datos.fecha_actualizacion || 'N/A';
-            document.getElementById('observaciones_entrega').textContent = datos.observaciones_entrega || 'N/A';
-            document.getElementById('fecha_actualizacion_entrega').textContent = datos.fecha_actualizacion_entrega || 'N/A';
-        }
-
-        // Llamamos a la función para actualizar los campos con los datos de la URL
-        actualizarCampos();
-    </script
+           
