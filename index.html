@@ -130,13 +130,13 @@
         /* Media Queries para mejorar la visualización en móviles */
         @media (max-width: 768px) {
             .timeline-container {
-                width: 90%;
-                padding: 13px;
+                width: 60%;
+                padding: 10px;
             }
 
             .timeline-content {
                 margin-left: 0;
-                padding-left: 20px;
+                padding-left: 12px;
             }
 
             .timeline::before {
@@ -145,13 +145,13 @@
             }
 
             .timeline-item::after {
-                left: 22px;
+                left: 26px;
             }
         }
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 26px;
+                font-size: 20px;
             }
 
             .timeline-content h3 {
@@ -177,7 +177,7 @@
             <!-- Estado de Pedido: En Ruta -->
             <div class="timeline-item en_ruta">
                 <div class="timeline-content en-ruta">
-                    <h3>Estado del Pedido: En Ruta</h3>
+                    <h2>Estado del Pedido: En Ruta</h2>
                     <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
                     <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
                     <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
