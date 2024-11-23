@@ -63,7 +63,7 @@
             transform: translateX(-50%);
             width: 20px;
             height: 30px;
-            background-color: #09c541; /* Negro */
+            background-color: #09c541; /* Verde */
             border-radius: 10%;
             z-index: 1;
         }
@@ -92,18 +92,68 @@
             font-weight: 500;
         }
 
-        .date {
-            position: absolute;
-            bottom: -35px;
-            left: 10px;
-            font-size: 14px;
-            color: #8d8b8b;
-            padding: 8px 12px;
-            background-color: #f1f0f3;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(15, 15, 15, 0.1);
-            border: 1px solid #161616;
-            margin-top: 15px;
+        /* Estilo de la sección "Estado del Pedido: Entregado" */
+        .timeline-item.entregado .timeline-content {
+            padding: 20px 20px 30px; /* Añadimos más espacio inferior */
+            margin-bottom: 40px; /* Aumentamos la separación entre el estado y la fecha de entrega */
+        }
+
+        .timeline-item .date {
+            margin-top: 20px; /* Agregar espacio adicional entre el estado y la fecha */
+            font-size: 16px;  /* Ajustamos el tamaño de la fecha para darle un toque más grande */
+            padding: 10px 15px;  /* Un poco más de padding para que se vea más amplio */
+        }
+
+        /* Media Queries para mejorar la visualización en móviles */
+        @media (max-width: 768px) {
+            .timeline-container {
+                width: 60%;
+                padding: 10px;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+                padding-left: 12px;
+            }
+
+            .timeline::before {
+                left: 20px;
+                width: 3px;
+            }
+
+            .timeline-item::after {
+                left: 26px;
+            }
+
+            /* Ajustes de los márgenes en móvil para asegurar buena visualización */
+            .timeline-item.entregado .timeline-content {
+                margin-bottom: 30px; /* Menos espacio en dispositivos más pequeños */
+            }
+
+            .timeline-item .date {
+                font-size: 14px; /* Ajustamos el tamaño de la fuente */
+                margin-top: 15px; /* Menos espacio arriba */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .timeline-content h3 {
+                font-size: 26px;
+            }
+
+            .timeline-content p {
+                font-size: 20px;
+            }
+
+            .date {
+                font-size: 12px;
+                padding: 8px 14px;
+                margin-top: 12px; /* Aseguramos que el espacio entre el estado y la fecha de entrega sea apropiado */
+            }
         }
 
         .status-pedido {
@@ -127,46 +177,6 @@
             color: #e3f309;
         }
 
-        /* Media Queries para mejorar la visualización en móviles */
-        @media (max-width: 768px) {
-            .timeline-container {
-                width: 60%;
-                padding: 10px;
-            }
-
-            .timeline-content {
-                margin-left: 0;
-                padding-left: 12px;
-            }
-
-            .timeline::before {
-                left: 20px;
-                width: 3px;
-            }
-
-            .timeline-item::after {
-                left: 26px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 20px;
-            }
-
-            .timeline-content h3 {
-                font-size: 26px;
-            }
-
-            .timeline-content p {
-                font-size: 20px;
-            }
-
-            .date {
-                font-size: 12px;
-                padding: 8px 14px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -190,7 +200,6 @@
                     <p>STATUS PEDIDO: <span id="status_pedido"></span></p>
                     <p>DIRECCION: <span id="direccion"></span></p>
                     <p>OBSERVACIONES: <span id="observaciones"></span></p>
-                    
                 </div>
             </div>
 
