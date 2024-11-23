@@ -193,4 +193,36 @@
         function obtenerParametrosURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return {
-                hora_salida: urlParams.get
+                hora_salida: urlParams.get('hora_salida'),
+                fecha_salida: urlParams.get('fecha_salida'),
+                nota_venta: urlParams.get('nota_venta'),
+                tipo_documento: urlParams.get('tipo_documento'),
+                factura: urlParams.get('factura'),
+                cliente: urlParams.get('cliente'),
+                bultos: urlParams.get('bultos'),
+                responsable_entrega: urlParams.get('responsable_entrega'),
+                num_seguimiento: urlParams.get('num_seguimiento'),
+                transporte: urlParams.get('transporte'),
+                status_pedido: urlParams.get('status_pedido'),
+                direccion: urlParams.get('direccion'),
+                observaciones: urlParams.get('observaciones'),
+                fecha_actualizacion: urlParams.get('fecha_actualizacion'),
+                observaciones_entrega: urlParams.get('observaciones_entrega'),
+                fecha_entrega: urlParams.get('fecha_entrega'),
+            };
+        }
+
+        // Función para actualizar los campos con los parámetros de la URL
+        function actualizarCampos() {
+            const datos = obtenerParametrosURL();
+
+            document.getElementById('hora_salida').textContent = datos.hora_salida || 'N/A';
+            document.getElementById('fecha_salida').textContent = datos.fecha_salida || 'N/A';
+            document.getElementById('nota_venta').textContent = datos.nota_venta || 'N/A';
+            document.getElementById('tipo_documento').textContent = datos.tipo_documento || 'N/A';
+            document.getElementById('factura').textContent = datos.factura || 'N/A';
+            document.getElementById('cliente').textContent = datos.cliente || 'N/A';
+            document.getElementById('bultos').textContent = datos.bultos || 'N/A';
+            document.getElementById('responsable_entrega').textContent = datos.responsable_entrega || 'N/A';
+            document.getElementById('num_seguimiento').textContent = datos.num_seguimiento || 'N/A';
+           
