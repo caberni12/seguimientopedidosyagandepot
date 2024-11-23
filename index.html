@@ -124,31 +124,6 @@
             background-color: #fcf8e3;
             color: #8a6d3b;
         }
-
-        /* Media Queries para diseño responsive */
-        @media screen and (min-width: 1024px) {
-            .timeline-container {
-                width: 70%;
-                padding: 20px;
-            }
-        }
-
-        @media screen and (max-width: 1023px) and (min-width: 768px) {
-            .timeline-container {
-                width: 80%;
-            }
-        }
-
-        @media screen and (max-width: 767px) {
-            .timeline-container {
-                width: 90%;
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -207,22 +182,36 @@
                 direccion: urlParams.get('direccion'),
                 observaciones: urlParams.get('observaciones'),
                 fecha_actualizacion: urlParams.get('fecha_actualizacion'),
-                observaciones_entrega: urlParams.get('observaciones_entrega'),
                 fecha_entrega: urlParams.get('fecha_entrega'),
+                observaciones_entrega: urlParams.get('observaciones_entrega')
             };
         }
 
-        // Función para actualizar los campos con los parámetros de la URL
+        // Función para actualizar los campos HTML con los datos de la URL
         function actualizarCampos() {
-            const datos = obtenerParametrosURL();
+            const params = obtenerParametrosURL();
 
-            document.getElementById('hora_salida').textContent = datos.hora_salida || 'N/A';
-            document.getElementById('fecha_salida').textContent = datos.fecha_salida || 'N/A';
-            document.getElementById('nota_venta').textContent = datos.nota_venta || 'N/A';
-            document.getElementById('tipo_documento').textContent = datos.tipo_documento || 'N/A';
-            document.getElementById('factura').textContent = datos.factura || 'N/A';
-            document.getElementById('cliente').textContent = datos.cliente || 'N/A';
-            document.getElementById('bultos').textContent = datos.bultos || 'N/A';
-            document.getElementById('responsable_entrega').textContent = datos.responsable_entrega || 'N/A';
-            document.getElementById('num_seguimiento').textContent = datos.num_seguimiento || 'N/A';
-           
+            // Asignar los valores de los parámetros a los elementos HTML
+            document.getElementById('hora_salida').textContent = params.hora_salida || '';
+            document.getElementById('fecha_salida').textContent = params.fecha_salida || '';
+            document.getElementById('nota_venta').textContent = params.nota_venta || '';
+            document.getElementById('tipo_documento').textContent = params.tipo_documento || '';
+            document.getElementById('factura').textContent = params.factura || '';
+            document.getElementById('cliente').textContent = params.cliente || '';
+            document.getElementById('bultos').textContent = params.bultos || '';
+            document.getElementById('responsable_entrega').textContent = params.responsable_entrega || '';
+            document.getElementById('num_seguimiento').textContent = params.num_seguimiento || '';
+            document.getElementById('transporte').textContent = params.transporte || '';
+            document.getElementById('status_pedido').textContent = params.status_pedido || '';
+            document.getElementById('direccion').textContent = params.direccion || '';
+            document.getElementById('observaciones').textContent = params.observaciones || '';
+            document.getElementById('fecha_actualizacion').textContent = params.fecha_actualizacion || '';
+            document.getElementById('fecha_entrega').textContent = params.fecha_entrega || '';
+            document.getElementById('observaciones_entrega').textContent = params.observaciones_entrega || '';
+        }
+
+        // Llamar a la función para actualizar los campos al cargar la página
+        window.onload = actualizarCampos;
+    </script>
+</body>
+</html>
