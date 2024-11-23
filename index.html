@@ -55,16 +55,17 @@
             z-index: 1;
         }
 
+        /* Eliminamos el punto verde, solo dejamos las líneas */
         .timeline-item::after {
-            content: '';
+            content: ''; /* Eliminamos el punto verde */
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 30px;
-            background-color: #09c541; /* Verde */
-            border-radius: 10%;
+            width: 0;
+            height: 0;
+            background-color: transparent; /* Sin color */
+            border-radius: 0;
             z-index: 1;
         }
 
