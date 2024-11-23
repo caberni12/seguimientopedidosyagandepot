@@ -49,25 +49,23 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 50px; /* Aumenta la separación entre los elementos */
+            margin-bottom: 50px;
             padding-left: 40px;
             z-index: 1;
         }
 
-        /* Eliminación de los puntos rojos, verdes y amarillos */
         .timeline-item::after {
             content: '';
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 0; /* Elimina el punto */
-            height: 0; /* Elimina el punto */
+            width: 0;
+            height: 0;
             border-radius: 50%;
             z-index: 2;
         }
 
-        /* Contenido del item */
         .timeline-content {
             background-color: #fff;
             padding: 15px 20px;
@@ -92,7 +90,6 @@
             font-weight: 500;
         }
 
-        /* Nuevo estilo para la fecha de actualización */
         .date {
             position: absolute;
             bottom: -35px;
@@ -107,59 +104,24 @@
             margin-top: 15px;
         }
 
-        /* Transición para los puntos */
-        .timeline-item::after {
-            transition: background-color 0.3s ease;
-        }
-
         .timeline-content p span {
             font-weight: 600;
         }
 
         /* Media Queries para diseño responsive */
-
-        /* Para dispositivos de escritorio (pantallas grandes) */
         @media screen and (min-width: 1024px) {
             .timeline-container {
                 width: 70%;
                 padding: 20px;
             }
-
-            .timeline-item::after {
-                width: 0;
-                height: 0;
-            }
-
-            .timeline-content {
-                padding: 20px;
-            }
-
-            .date {
-                font-size: 14px;
-            }
         }
 
-        /* Para tablets y pantallas medianas */
         @media screen and (max-width: 1023px) and (min-width: 768px) {
             .timeline-container {
                 width: 80%;
             }
-
-            .timeline-item::after {
-                width: 0;
-                height: 0;
-            }
-
-            .timeline-content {
-                padding: 15px;
-            }
-
-            .date {
-                font-size: 13px;
-            }
         }
 
-        /* Para móviles */
         @media screen and (max-width: 767px) {
             .timeline-container {
                 width: 90%;
@@ -168,19 +130,6 @@
 
             h1 {
                 font-size: 24px;
-            }
-
-            .timeline-item::after {
-                width: 0;
-                height: 0;
-            }
-
-            .timeline-content {
-                padding: 12px;
-            }
-
-            .date {
-                font-size: 12px;
             }
         }
     </style>
@@ -214,23 +163,9 @@
             <!-- Item 2: Entregado -->
             <div class="timeline-item entregado">
                 <div class="timeline-content">
-                    <h3>Entrega Completa</h3>
-                    <p>HORA DE ENTREGA: <span id="hora_entrega"></span></p>
-                    <p>FECHA DE ENTREGA: <span id="fecha_entrega"></span></p>
-                    <p>CLIENTE: <span id="cliente_entrega"></span></p>
+                    <h3>PEDIDO ENTREGADO</h3>
                     <p>OBSERVACIONES: <span id="observaciones_entrega"></span></p>
                     <p class="date">Fecha de actualización: <span id="fecha_actualizacion_entrega"></span></p>
-                </div>
-            </div>
-
-            <!-- Item 3: Pendiente -->
-            <div class="timeline-item pendiente">
-                <div class="timeline-content">
-                    <h3>Pedido Pendiente</h3>
-                    <p>HORA DE PENDIENTE: <span id="hora_pendiente"></span></p>
-                    <p>FECHA DE PENDIENTE: <span id="fecha_pendiente"></span></p>
-                    <p>STATUS: <span id="status_pendiente"></span></p>
-                    <p class="date">Fecha de actualización: <span id="fecha_actualizacion_pendiente"></span></p>
                 </div>
             </div>
         </div>
@@ -255,15 +190,8 @@
                 direccion: urlParams.get('direccion'),
                 observaciones: urlParams.get('observaciones'),
                 fecha_actualizacion: urlParams.get('fecha_actualizacion'),
-                hora_entrega: urlParams.get('hora_entrega'),
-                fecha_entrega: urlParams.get('fecha_entrega'),
-                cliente_entrega: urlParams.get('cliente_entrega'),
                 observaciones_entrega: urlParams.get('observaciones_entrega'),
                 fecha_actualizacion_entrega: urlParams.get('fecha_actualizacion_entrega'),
-                hora_pendiente: urlParams.get('hora_pendiente'),
-                fecha_pendiente: urlParams.get('fecha_pendiente'),
-                status_pendiente: urlParams.get('status_pendiente'),
-                fecha_actualizacion_pendiente: urlParams.get('fecha_actualizacion_pendiente')
             };
         }
 
@@ -285,19 +213,10 @@
             document.getElementById('direccion').textContent = datos.direccion || 'N/A';
             document.getElementById('observaciones').textContent = datos.observaciones || 'N/A';
             document.getElementById('fecha_actualizacion').textContent = datos.fecha_actualizacion || 'N/A';
-            document.getElementById('hora_entrega').textContent = datos.hora_entrega || 'N/A';
-            document.getElementById('fecha_entrega').textContent = datos.fecha_entrega || 'N/A';
-            document.getElementById('cliente_entrega').textContent = datos.cliente_entrega || 'N/A';
             document.getElementById('observaciones_entrega').textContent = datos.observaciones_entrega || 'N/A';
             document.getElementById('fecha_actualizacion_entrega').textContent = datos.fecha_actualizacion_entrega || 'N/A';
-            document.getElementById('hora_pendiente').textContent = datos.hora_pendiente || 'N/A';
-            document.getElementById('fecha_pendiente').textContent = datos.fecha_pendiente || 'N/A';
-            document.getElementById('status_pendiente').textContent = datos.status_pendiente || 'N/A';
-            document.getElementById('fecha_actualizacion_pendiente').textContent = datos.fecha_actualizacion_pendiente || 'N/A';
         }
 
         // Llamamos a la función para actualizar los campos con los datos de la URL
         actualizarCampos();
-    </script>
-</body>
-</html>
+    </script
