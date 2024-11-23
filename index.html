@@ -226,7 +226,7 @@
                 <div class="separator"></div> <!-- Línea vertical entre iconos -->
                 <div class="timeline-content">
                     <h2>Estado del Pedido: En Camino</h2>
-                    <p>Favor espere......</p>
+                    <p>Información adicional sobre el estado en camino...</p>
                 </div>
             </div>
 
@@ -248,4 +248,43 @@
             const urlParams = new URLSearchParams(window.location.search);
             return {
                 hora_salida: urlParams.get('hora_salida'),
-                fecha_salida:
+                fecha_salida: urlParams.get('fecha_salida'),
+                nota_venta: urlParams.get('nota_venta'),
+                tipo_documento: urlParams.get('tipo_documento'),
+                factura: urlParams.get('factura'),
+                cliente: urlParams.get('cliente'),
+                bultos: urlParams.get('bultos'),
+                responsable_entrega: urlParams.get('responsable_entrega'),
+                transporte: urlParams.get('transporte'),
+                status_pedido: urlParams.get('status_pedido'),
+                direccion: urlParams.get('direccion'),
+                observaciones: urlParams.get('observaciones'),
+                fecha_entrega: urlParams.get('fecha_entrega')
+            };
+        }
+
+        // Función para actualizar los campos HTML con los datos de la URL
+        function actualizarCampos() {
+            const params = obtenerParametrosURL();
+
+            // Asignar los valores de los parámetros a los elementos HTML
+            document.getElementById('hora_salida').textContent = params.hora_salida || '';
+            document.getElementById('fecha_salida').textContent = params.fecha_salida || '';
+            document.getElementById('nota_venta').textContent = params.nota_venta || '';
+            document.getElementById('tipo_documento').textContent = params.tipo_documento || '';
+            document.getElementById('factura').textContent = params.factura || '';
+            document.getElementById('cliente').textContent = params.cliente || '';
+            document.getElementById('bultos').textContent = params.bultos || '';
+            document.getElementById('responsable_entrega').textContent = params.responsable_entrega || '';
+            document.getElementById('transporte').textContent = params.transporte || '';
+            document.getElementById('status_pedido').textContent = params.status_pedido || '';
+            document.getElementById('direccion').textContent = params.direccion || '';
+            document.getElementById('observaciones').textContent = params.observaciones || '';
+            document.getElementById('fecha_entrega').textContent = params.fecha_entrega || '';
+        }
+
+        // Llamar a la función para actualizar los campos al cargar la página
+        window.onload = actualizarCampos;
+    </script>
+</body>
+</html>
