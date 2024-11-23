@@ -49,36 +49,22 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 50px; /* Aumenta la separación entre los elementos */
             padding-left: 40px;
             z-index: 1;
         }
 
+        /* Eliminación de los puntos rojos, verdes y amarillos */
         .timeline-item::after {
             content: '';
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
+            width: 0; /* Elimina el punto */
+            height: 0; /* Elimina el punto */
             border-radius: 50%;
-            border: 5px solid #fff;
-            background-color: #4CAF50; /* Default green for Entregado */
             z-index: 2;
-        }
-
-        /* Colores para el punto de estado */
-        .timeline-item.en_ruta::after {
-            background-color: #F44336; /* Rojo para "En ruta" */
-        }
-
-        .timeline-item.entregado::after {
-            background-color: #4CAF50; /* Verde para "Entregado" */
-        }
-
-        .timeline-item.pendiente::after {
-            background-color: #FFEB3B; /* Amarillo para "Pendiente" */
         }
 
         /* Contenido del item */
@@ -140,8 +126,8 @@
             }
 
             .timeline-item::after {
-                width: 20px;
-                height: 20px;
+                width: 0;
+                height: 0;
             }
 
             .timeline-content {
@@ -160,8 +146,8 @@
             }
 
             .timeline-item::after {
-                width: 18px;
-                height: 18px;
+                width: 0;
+                height: 0;
             }
 
             .timeline-content {
@@ -185,8 +171,8 @@
             }
 
             .timeline-item::after {
-                width: 16px;
-                height: 16px;
+                width: 0;
+                height: 0;
             }
 
             .timeline-content {
@@ -208,20 +194,20 @@
             <div class="timeline-item en_ruta">
                 <div class="timeline-content">
                     <h3>Estado del Pedido</h3>
-                    <p>HORA DE SALIDA: <span id="hora_salida">10:00 AM</span></p>
-                    <p>FECHA DE SALIDA CD: <span id="fecha_salida">2024-11-23</span></p>
-                    <p>NOTA DE VENTA: <span id="nota_venta">NV12345</span></p>
-                    <p>TIPO DE DOCUMENTO: <span id="tipo_documento">Factura</span></p>
-                    <p>FACTURA: <span id="factura">F123456</span></p>
-                    <p>CLIENTE: <span id="cliente">Cliente XYZ</span></p>
-                    <p>BULTOS: <span id="bultos">5</span></p>
-                    <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega">Juan Pérez</span></p>
-                    <p>NUMERO DE SEGUIMIENTO: <span id="num_seguimiento">123456789</span></p>
-                    <p>TRANSPORTE: <span id="transporte">Despacha Yagan</span></p>
-                    <p>STATUS PEDIDO: <span id="status_pedido">En ruta</span></p>
-                    <p>DIRECCION: <span id="direccion">Calle Ficticia 123</span></p>
-                    <p>OBSERVACIONES: <span id="observaciones">En espera de confirmación del cliente</span></p>
-                    <p class="date">Fecha de actualización: 2024-11-23</p>
+                    <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
+                    <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
+                    <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
+                    <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
+                    <p>FACTURA: <span id="factura"></span></p>
+                    <p>CLIENTE: <span id="cliente"></span></p>
+                    <p>BULTOS: <span id="bultos"></span></p>
+                    <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
+                    <p>NUMERO DE SEGUIMIENTO: <span id="num_seguimiento"></span></p>
+                    <p>TRANSPORTE: <span id="transporte"></span></p>
+                    <p>STATUS PEDIDO: <span id="status_pedido"></span></p>
+                    <p>DIRECCION: <span id="direccion"></span></p>
+                    <p>OBSERVACIONES: <span id="observaciones"></span></p>
+                    <p class="date">Fecha de actualización: <span id="fecha_actualizacion"></span></p>
                 </div>
             </div>
 
@@ -229,11 +215,11 @@
             <div class="timeline-item entregado">
                 <div class="timeline-content">
                     <h3>Entrega Completa</h3>
-                    <p>HORA DE ENTREGA: <span id="hora_entrega">2:00 PM</span></p>
-                    <p>FECHA DE ENTREGA: <span id="fecha_entrega">2024-11-24</span></p>
-                    <p>CLIENTE: <span id="cliente_entrega">Cliente XYZ</span></p>
-                    <p>OBSERVACIONES: <span id="observaciones_entrega">Pedido entregado satisfactoriamente</span></p>
-                    <p class="date">Fecha de actualización: 2024-11-24</p>
+                    <p>HORA DE ENTREGA: <span id="hora_entrega"></span></p>
+                    <p>FECHA DE ENTREGA: <span id="fecha_entrega"></span></p>
+                    <p>CLIENTE: <span id="cliente_entrega"></span></p>
+                    <p>OBSERVACIONES: <span id="observaciones_entrega"></span></p>
+                    <p class="date">Fecha de actualización: <span id="fecha_actualizacion_entrega"></span></p>
                 </div>
             </div>
 
@@ -241,51 +227,76 @@
             <div class="timeline-item pendiente">
                 <div class="timeline-content">
                     <h3>Pedido Pendiente</h3>
-                    <p>HORA DE PENDIENTE: <span id="hora_pendiente">Sin definir</span></p>
-                    <p>FECHA DE PENDIENTE: <span id="fecha_pendiente">Por confirmar</span></p>
-                    <p>STATUS: <span id="status_pendiente">Pendiente</span></p>
-                    <p class="date">Fecha de actualización: 2024-11-24</p>
+                    <p>HORA DE PENDIENTE: <span id="hora_pendiente"></span></p>
+                    <p>FECHA DE PENDIENTE: <span id="fecha_pendiente"></span></p>
+                    <p>STATUS: <span id="status_pendiente"></span></p>
+                    <p class="date">Fecha de actualización: <span id="fecha_actualizacion_pendiente"></span></p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Simula la actualización de campos de AppSheet u otros sistemas
-        function actualizarCampos() {
-            const datos = {
-                hora_salida: "10:00 AM",
-                fecha_salida: "2024-11-23",
-                nota_venta: "NV12345",
-                tipo_documento: "Factura",
-                factura: "F123456",
-                cliente: "Cliente XYZ",
-                bultos: "5",
-                responsable_entrega: "Juan Pérez",
-                num_seguimiento: "123456789",
-                transporte: "Despacha Yagan",
-                status_pedido: "En ruta",
-                direccion: "Calle Ficticia 123",
-                observaciones: "En espera de confirmación del cliente"
+        // Función para obtener los parámetros de la URL
+        function obtenerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                hora_salida: urlParams.get('hora_salida'),
+                fecha_salida: urlParams.get('fecha_salida'),
+                nota_venta: urlParams.get('nota_venta'),
+                tipo_documento: urlParams.get('tipo_documento'),
+                factura: urlParams.get('factura'),
+                cliente: urlParams.get('cliente'),
+                bultos: urlParams.get('bultos'),
+                responsable_entrega: urlParams.get('responsable_entrega'),
+                num_seguimiento: urlParams.get('num_seguimiento'),
+                transporte: urlParams.get('transporte'),
+                status_pedido: urlParams.get('status_pedido'),
+                direccion: urlParams.get('direccion'),
+                observaciones: urlParams.get('observaciones'),
+                fecha_actualizacion: urlParams.get('fecha_actualizacion'),
+                hora_entrega: urlParams.get('hora_entrega'),
+                fecha_entrega: urlParams.get('fecha_entrega'),
+                cliente_entrega: urlParams.get('cliente_entrega'),
+                observaciones_entrega: urlParams.get('observaciones_entrega'),
+                fecha_actualizacion_entrega: urlParams.get('fecha_actualizacion_entrega'),
+                hora_pendiente: urlParams.get('hora_pendiente'),
+                fecha_pendiente: urlParams.get('fecha_pendiente'),
+                status_pendiente: urlParams.get('status_pendiente'),
+                fecha_actualizacion_pendiente: urlParams.get('fecha_actualizacion_pendiente')
             };
-
-            // Actualizar los campos en la página
-            document.getElementById('hora_salida').textContent = datos.hora_salida;
-            document.getElementById('fecha_salida').textContent = datos.fecha_salida;
-            document.getElementById('nota_venta').textContent = datos.nota_venta;
-            document.getElementById('tipo_documento').textContent = datos.tipo_documento;
-            document.getElementById('factura').textContent = datos.factura;
-            document.getElementById('cliente').textContent = datos.cliente;
-            document.getElementById('bultos').textContent = datos.bultos;
-            document.getElementById('responsable_entrega').textContent = datos.responsable_entrega;
-            document.getElementById('num_seguimiento').textContent = datos.num_seguimiento;
-            document.getElementById('transporte').textContent = datos.transporte;
-            document.getElementById('status_pedido').textContent = datos.status_pedido;
-            document.getElementById('direccion').textContent = datos.direccion;
-            document.getElementById('observaciones').textContent = datos.observaciones;
         }
 
-        // Llamamos a la función para simular la carga de datos
+        // Función para actualizar los campos con los parámetros de la URL
+        function actualizarCampos() {
+            const datos = obtenerParametrosURL();
+
+            document.getElementById('hora_salida').textContent = datos.hora_salida || 'N/A';
+            document.getElementById('fecha_salida').textContent = datos.fecha_salida || 'N/A';
+            document.getElementById('nota_venta').textContent = datos.nota_venta || 'N/A';
+            document.getElementById('tipo_documento').textContent = datos.tipo_documento || 'N/A';
+            document.getElementById('factura').textContent = datos.factura || 'N/A';
+            document.getElementById('cliente').textContent = datos.cliente || 'N/A';
+            document.getElementById('bultos').textContent = datos.bultos || 'N/A';
+            document.getElementById('responsable_entrega').textContent = datos.responsable_entrega || 'N/A';
+            document.getElementById('num_seguimiento').textContent = datos.num_seguimiento || 'N/A';
+            document.getElementById('transporte').textContent = datos.transporte || 'N/A';
+            document.getElementById('status_pedido').textContent = datos.status_pedido || 'N/A';
+            document.getElementById('direccion').textContent = datos.direccion || 'N/A';
+            document.getElementById('observaciones').textContent = datos.observaciones || 'N/A';
+            document.getElementById('fecha_actualizacion').textContent = datos.fecha_actualizacion || 'N/A';
+            document.getElementById('hora_entrega').textContent = datos.hora_entrega || 'N/A';
+            document.getElementById('fecha_entrega').textContent = datos.fecha_entrega || 'N/A';
+            document.getElementById('cliente_entrega').textContent = datos.cliente_entrega || 'N/A';
+            document.getElementById('observaciones_entrega').textContent = datos.observaciones_entrega || 'N/A';
+            document.getElementById('fecha_actualizacion_entrega').textContent = datos.fecha_actualizacion_entrega || 'N/A';
+            document.getElementById('hora_pendiente').textContent = datos.hora_pendiente || 'N/A';
+            document.getElementById('fecha_pendiente').textContent = datos.fecha_pendiente || 'N/A';
+            document.getElementById('status_pendiente').textContent = datos.status_pendiente || 'N/A';
+            document.getElementById('fecha_actualizacion_pendiente').textContent = datos.fecha_actualizacion_pendiente || 'N/A';
+        }
+
+        // Llamamos a la función para actualizar los campos con los datos de la URL
         actualizarCampos();
     </script>
 </body>
