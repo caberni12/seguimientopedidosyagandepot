@@ -107,7 +107,7 @@
         /* Media Queries para mejorar la visualización en móviles */
         @media (max-width: 768px) {
             .timeline-container {
-                width: 60%;
+                width: 100%; /* Ocupa todo el ancho disponible en dispositivos más pequeños */
                 padding: 10px;
             }
 
@@ -133,6 +133,15 @@
             .timeline-item .date {
                 font-size: 14px; /* Ajustamos el tamaño de la fuente */
                 margin-top: 15px; /* Menos espacio arriba */
+            }
+
+            /* Asegurando que el fondo verde de los estados se vea más ancho */
+            .timeline-item.entregado .timeline-content,
+            .timeline-item.en_ruta .timeline-content {
+                width: 100%; /* Hacemos que el fondo verde ocupe todo el espacio disponible */
+                margin: 0;
+                padding: 15px;
+                box-sizing: border-box;
             }
         }
 
