@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Pedido Entregas a Cliente Región Metropolitana</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0e0d0d;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px;
+            color: #161515;
+            font-weight: bold;
+            text-transform: uppercase; /* Titulo en mayúsculas */
+        }
+
+        .timeline-container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+            margin-top: 60px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        /* Círculo del estado */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15px;
+            width: 20px;
+            height: 20px;
+            background-color: #4CAF50; /* Círculo verde por defecto */
+            border-radius: 50%;
+            border: 3px solid white;
+            z-index: 1;
+        }
+
+        /* Cambiar color del círculo a rojo cuando está en ruta */
+        .en-ruta::before {
+            background-color: #FF5733; /* Rojo */
+        }
+
+        /* Cambiar color del círculo a verde cuando está entregado */
+        .entregado::before {
+            background-color: #4CAF50; /* Verde */
+        }
+
+        .timeline-content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-left: 40px;
+            position: relative;
+        }
+
+        .timeline-content h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase; /* Encabezados en mayúsculas */
+        }
+
+        .timeline-content p {
+            margin: 0 0 10px 0;
+            color: #555;
+            font-weight: bold;
+            text-transform: uppercase; /* Todos los textos en mayúsculas */
+            display: flex;
+            align-items: center;
+        }
+
+        .status-circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .date {
+            position: absolute;
+            bottom: -20px;
+            left: 20px;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Estilos para pantallas grandes (escritorio) */
+        @media screen and (min-width: 1024px) {
+            .timeline-container {
+                width: 60%;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .timeline-content {
+                padding: 30px;
+            }
+
+            .timeline-item::before {
+                width: 25px;
+                height: 25px;
+            }
+
+            .date {
+                font-size: 20px;
+            }
+        }
+
+        /* Estilos para pantallas medianas (tabletas) */
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+            .timeline-container {
+                width: 75%;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .timeline-content {
+                padding: 25px;
+            }
+
+            .timeline-item::before {
+                width: 22px;
+                height: 22px;
+            }
+
+            .date {
+                font-size: 18px;
+            }
+        }
+
+        /* Estilos para pantallas pequeñas (móviles) */
+        @media screen and (max-width: 767px) {
+            .timeline-container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin: 10px 0;
+            }
+
+            .timeline-content {
+                padding: 15px;
+            }
+
+            .timeline-item::before {
+                width: 20px;
+                height: 20px;
+            }
+
+            .date {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timeline-container">
+        <h1>Seguimiento Entrega a Cliente RM</h1>
+    
+        <!-- Estatus "En Ruta" -->
+        <div class="timeline-item" id="timeline-item">
+            <div class="timeline-content">
+                <h3>Status de Salida Centro de Distribución</h3>
+                <p id="estado_pedido">
+                    <span id="status_circle" class="status-circle"></span>
+                    Estado: <span id="status_pedido"></span>
+                </p>
+                <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
+                <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
+                <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
+                <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
+                <p>FACTURA: <span id="factura"></span></p>
+                <p>CLIENTE: <span id="cliente"></span></p>
+                <p>BULTOS: <span id="bultos"></span></p>
+                <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
+                <p>NUMERO DE SEGUIMIENTO: <span id="num_seguimiento"></span></p>
+                <p>TRANSPORTE: <span id="transporte"></span></p>
+                <p>TRACKING: <span id="tracking"></span></p>
+                <p>STATUS PEDIDO: <span id="status_pedido"></span></p>
+                <p>DIRECCION: <span id="direccion"></span></p>
+                <p>IMAGEN: <img id="imagen" src="" alt="Imagen del Pedido"></p>
+                <p>OBSERVACIONES: <span id="observaciones"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getQueryParams() {
+            // Obtener los parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Actualizar los valores de los campos en la página
+            document.getElementById('hora_salida').textContent = urlParams.get('hora_salida');
+            document.getElementById('fecha_salida').textContent = urlParams.get('fecha_salida');
+            document.getElementById('nota_venta').textContent = urlParams.get('nota_venta');
+            document.getElementById('tipo_documento').textContent = urlParams.get('tipo_documento');
+            document.getElementById('factura').textContent = urlParams.get('factura');
+            document.getElementById('cliente').textContent = urlParams.get('cliente');
+            document.getElementById('bultos').textContent = urlParams.get('bultos');
+            document.getElementById('responsable_entrega').textContent = urlParams.get('responsable_entrega');
+            document.getElementById('num_seguimiento').textContent = urlParams.get('num_seguimiento');
+            document.getElementById('transporte').textContent = urlParams.get('transporte');
+            document.getElementById('tracking').textContent = urlParams.get('tracking');
+            document.getElementById('status_pedido').textContent = urlParams.get('status_pedido');
+            document.getElementById('direccion').textContent = urlParams.get('direccion');
+            document.getElementById('imagen').src = urlParams.get('imagen');
+            document.getElementById('observaciones').textContent = urlParams.get('observaciones');
+            
+            // Cambiar la clase del estado y el color del círculo
+            const status = urlParams.get('status_pedido');
+            const statusPedido = document.getElementById('status_pedido');
+            const statusCircle = document.getElementById('status_circle');
+
+            if (status === 'En Ruta') {
+                statusCircle.style.backgroundColor = '#FF5733'; // Rojo
+                statusPedido.style.color = '#FF5733'; // Rojo
+            } else if (status === 'Entregado') {
+                statusCircle.style.backgroundColor = '#4CAF50'; // Verde
+                statusPedido.style.color = '#4CAF50'; // Verde
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        window.onload = getQueryParams;
+    </script>
+</body>
+</html>
