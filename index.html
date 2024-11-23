@@ -3,249 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedido Entregas a Cliente Región Metropolitana</title>
+    <title>Seguimiento de Pedido</title>
     <style>
-        /* Estilos básicos */
+        /* Estilo general de la página */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #0e0d0d;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fb;
             margin: 0;
             padding: 0;
         }
 
         h1 {
             text-align: center;
-            margin: 20px;
-            color: #161515;
-            font-weight: bold;
-            text-transform: uppercase; /* Titulo en mayúsculas */
+            font-size: 28px;
+            color: #333;
+            margin-top: 40px;
+            text-transform: uppercase;
         }
 
         .timeline-container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
+            width: 70%;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
 
         .timeline {
             position: relative;
-            padding-left: 60px;
-            margin-top: 60px;
+            padding: 10px 0;
+        }
+
+        /* Línea vertical */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background-color: #ddd;
+            z-index: 0;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 40px;
-        }
-
-        /* Círculo del estado */
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 15px;
-            width: 20px;
-            height: 20px;
-            background-color: #4CAF50; /* Círculo verde por defecto */
-            border-radius: 50%;
-            border: 3px solid white;
+            margin-bottom: 30px;
+            padding-left: 40px;
             z-index: 1;
         }
 
-        /* Cambiar color del círculo a rojo cuando está en ruta */
-        .en-ruta::before {
-            background-color: #FF5733; /* Rojo */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            background-color: #4CAF50; /* Default green for Entregado */
+            z-index: 2;
         }
 
-        /* Cambiar color del círculo a verde cuando está entregado */
-        .entregado::before {
-            background-color: #4CAF50; /* Verde */
+        /* Colores para el punto de estado */
+        .timeline-item.en_ruta::after {
+            background-color: #F44336; /* Rojo para "En ruta" */
         }
 
+        .timeline-item.entregado::after {
+            background-color: #4CAF50; /* Verde para "Entregado" */
+        }
+
+        .timeline-item.pendiente::after {
+            background-color: #FFEB3B; /* Amarillo para "Pendiente" */
+        }
+
+        /* Contenido del item */
         .timeline-content {
-            background-color: #f9f9f9;
-            padding: 20px;
+            background-color: #fff;
+            padding: 15px 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-left: 40px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             position: relative;
+            margin-left: 50px;
+            z-index: 1;
         }
 
         .timeline-content h3 {
-            margin: 0 0 10px 0;
-            color: #333;
+            font-size: 18px;
             font-weight: bold;
-            text-transform: uppercase; /* Encabezados en mayúsculas */
+            color: #333;
+            margin: 0 0 10px 0;
         }
 
         .timeline-content p {
-            margin: 0 0 10px 0;
             color: #555;
-            font-weight: bold;
-            text-transform: uppercase; /* Todos los textos en mayúsculas */
-            display: flex;
-            align-items: center;
+            margin: 0 0 10px;
+            font-size: 16px;
+            font-weight: 500;
         }
 
-        .status-circle {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
+        /* Nuevo estilo para la fecha de actualización */
         .date {
             position: absolute;
-            bottom: -20px;
-            left: 20px;
-            font-size: 18px;
-            color: #333;
-            font-weight: bold;
+            bottom: -35px;
+            left: 10px;
+            font-size: 14px;
+            color: #888;
+            padding: 8px 12px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            margin-top: 15px;
         }
 
-        /* Estilos para pantallas grandes (escritorio) */
+        /* Transición para los puntos */
+        .timeline-item::after {
+            transition: background-color 0.3s ease;
+        }
+
+        .timeline-content p span {
+            font-weight: 600;
+        }
+
+        /* Media Queries para diseño responsive */
+
+        /* Para dispositivos de escritorio (pantallas grandes) */
         @media screen and (min-width: 1024px) {
             .timeline-container {
-                width: 60%;
+                width: 70%;
+                padding: 20px;
             }
 
-            h1 {
-                font-size: 36px;
-            }
-
-            .timeline-content {
-                padding: 30px;
-            }
-
-            .timeline-item::before {
-                width: 25px;
-                height: 25px;
-            }
-
-            .date {
-                font-size: 20px;
-            }
-        }
-
-        /* Estilos para pantallas medianas (tabletas) */
-        @media screen and (min-width: 768px) and (max-width: 1023px) {
-            .timeline-container {
-                width: 75%;
-            }
-
-            h1 {
-                font-size: 30px;
+            .timeline-item::after {
+                width: 20px;
+                height: 20px;
             }
 
             .timeline-content {
-                padding: 25px;
-            }
-
-            .timeline-item::before {
-                width: 22px;
-                height: 22px;
+                padding: 20px;
             }
 
             .date {
-                font-size: 18px;
+                font-size: 14px;
             }
         }
 
-        /* Estilos para pantallas pequeñas (móviles) */
-        @media screen and (max-width: 767px) {
+        /* Para tablets y pantallas medianas */
+        @media screen and (max-width: 1023px) and (min-width: 768px) {
             .timeline-container {
-                width: 95%;
-                padding: 10px;
+                width: 80%;
             }
 
-            h1 {
-                font-size: 24px;
-                margin: 10px 0;
+            .timeline-item::after {
+                width: 18px;
+                height: 18px;
             }
 
             .timeline-content {
                 padding: 15px;
             }
 
-            .timeline-item::before {
-                width: 20px;
-                height: 20px;
+            .date {
+                font-size: 13px;
+            }
+        }
+
+        /* Para móviles */
+        @media screen and (max-width: 767px) {
+            .timeline-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .timeline-item::after {
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-content {
+                padding: 12px;
             }
 
             .date {
-                font-size: 16px;
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
+    <h1>Seguimiento Pedido</h1>
+
     <div class="timeline-container">
-        <h1>Seguimiento Entrega a Cliente RM</h1>
-    
-        <!-- Estatus "En Ruta" -->
-        <div class="timeline-item" id="timeline-item">
-            <div class="timeline-content">
-                <h3>Status de Salida Centro de Distribución</h3>
-                <p id="estado_pedido">
-                    <span id="status_circle" class="status-circle"></span>
-                    Estado: <span id="status_pedido"></span>
-                </p>
-                <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
-                <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
-                <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
-                <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
-                <p>FACTURA: <span id="factura"></span></p>
-                <p>CLIENTE: <span id="cliente"></span></p>
-                <p>BULTOS: <span id="bultos"></span></p>
-                <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
-                <p>NUMERO DE SEGUIMIENTO: <span id="num_seguimiento"></span></p>
-                <p>TRANSPORTE: <span id="transporte"></span></p>
-                <p>STATUS PEDIDO: <span id="status_pedido"></span></p>
-                <p>DIRECCION: <span id="direccion"></span></p>
-                <p>OBSERVACIONES: <span id="observaciones"></span></p>
+        <div class="timeline">
+            <!-- Item 1: En Ruta -->
+            <div class="timeline-item en_ruta">
+                <div class="timeline-content">
+                    <h3>Estado del Pedido</h3>
+                    <p>HORA DE SALIDA: <span id="hora_salida">10:00 AM</span></p>
+                    <p>FECHA DE SALIDA CD: <span id="fecha_salida">2024-11-23</span></p>
+                    <p>NOTA DE VENTA: <span id="nota_venta">NV12345</span></p>
+                    <p>TIPO DE DOCUMENTO: <span id="tipo_documento">Factura</span></p>
+                    <p>FACTURA: <span id="factura">F123456</span></p>
+                    <p>CLIENTE: <span id="cliente">Cliente XYZ</span></p>
+                    <p>BULTOS: <span id="bultos">5</span></p>
+                    <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega">Juan Pérez</span></p>
+                    <p>NUMERO DE SEGUIMIENTO: <span id="num_seguimiento">123456789</span></p>
+                    <p>TRANSPORTE: <span id="transporte">Despacha Yagan</span></p>
+                    <p>STATUS PEDIDO: <span id="status_pedido">En ruta</span></p>
+                    <p>DIRECCION: <span id="direccion">Calle Ficticia 123</span></p>
+                    <p>OBSERVACIONES: <span id="observaciones">En espera de confirmación del cliente</span></p>
+                    <p class="date">Fecha de actualización: 2024-11-23</p>
+                </div>
+            </div>
+
+            <!-- Item 2: Entregado -->
+            <div class="timeline-item entregado">
+                <div class="timeline-content">
+                    <h3>Entrega Completa</h3>
+                    <p>HORA DE ENTREGA: <span id="hora_entrega">2:00 PM</span></p>
+                    <p>FECHA DE ENTREGA: <span id="fecha_entrega">2024-11-24</span></p>
+                    <p>CLIENTE: <span id="cliente_entrega">Cliente XYZ</span></p>
+                    <p>OBSERVACIONES: <span id="observaciones_entrega">Pedido entregado satisfactoriamente</span></p>
+                    <p class="date">Fecha de actualización: 2024-11-24</p>
+                </div>
+            </div>
+
+            <!-- Item 3: Pendiente -->
+            <div class="timeline-item pendiente">
+                <div class="timeline-content">
+                    <h3>Pedido Pendiente</h3>
+                    <p>HORA DE PENDIENTE: <span id="hora_pendiente">Sin definir</span></p>
+                    <p>FECHA DE PENDIENTE: <span id="fecha_pendiente">Por confirmar</span></p>
+                    <p>STATUS: <span id="status_pendiente">Pendiente</span></p>
+                    <p class="date">Fecha de actualización: 2024-11-24</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function getQueryParams() {
-            // Obtener los parámetros de la URL
-            const urlParams = new URLSearchParams(window.location.search);
+        // Simula la actualización de campos de AppSheet u otros sistemas
+        function actualizarCampos() {
+            const datos = {
+                hora_salida: "10:00 AM",
+                fecha_salida: "2024-11-23",
+                nota_venta: "NV12345",
+                tipo_documento: "Factura",
+                factura: "F123456",
+                cliente: "Cliente XYZ",
+                bultos: "5",
+                responsable_entrega: "Juan Pérez",
+                num_seguimiento: "123456789",
+                transporte: "Despacha Yagan",
+                status_pedido: "En ruta",
+                direccion: "Calle Ficticia 123",
+                observaciones: "En espera de confirmación del cliente"
+            };
 
-            // Actualizar los valores de los campos en la página
-            document.getElementById('hora_salida').textContent = urlParams.get('hora_salida');
-            document.getElementById('fecha_salida').textContent = urlParams.get('fecha_salida');
-            document.getElementById('nota_venta').textContent = urlParams.get('nota_venta');
-            document.getElementById('tipo_documento').textContent = urlParams.get('tipo_documento');
-            document.getElementById('factura').textContent = urlParams.get('factura');
-            document.getElementById('cliente').textContent = urlParams.get('cliente');
-            document.getElementById('bultos').textContent = urlParams.get('bultos');
-            document.getElementById('responsable_entrega').textContent = urlParams.get('responsable_entrega');
-            document.getElementById('num_seguimiento').textContent = urlParams.get('num_seguimiento');
-            document.getElementById('transporte').textContent = urlParams.get('transporte');
-            document.getElementById('status_pedido').textContent = urlParams.get('status_pedido');
-            document.getElementById('direccion').textContent = urlParams.get('direccion');
-            document.getElementById('observaciones').textContent = urlParams.get('observaciones');
-            
-            // Cambiar la clase del estado y el color del círculo
-            const status = urlParams.get('status_pedido');
-            const statusPedido = document.getElementById('status_pedido');
-            const statusCircle = document.getElementById('status_circle');
-
-            if (status === 'En Ruta') {
-                statusCircle.style.backgroundColor = '#FF5733'; // Rojo
-                statusPedido.style.color = '#FF5733'; // Rojo
-            } else if (status === 'Entregado') {
-                statusCircle.style.backgroundColor = '#4CAF50'; // Verde
-                statusPedido.style.color = '#4CAF50'; // Verde
-            }
+            // Actualizar los campos en la página
+            document.getElementById('hora_salida').textContent = datos.hora_salida;
+            document.getElementById('fecha_salida').textContent = datos.fecha_salida;
+            document.getElementById('nota_venta').textContent = datos.nota_venta;
+            document.getElementById('tipo_documento').textContent = datos.tipo_documento;
+            document.getElementById('factura').textContent = datos.factura;
+            document.getElementById('cliente').textContent = datos.cliente;
+            document.getElementById('bultos').textContent = datos.bultos;
+            document.getElementById('responsable_entrega').textContent = datos.responsable_entrega;
+            document.getElementById('num_seguimiento').textContent = datos.num_seguimiento;
+            document.getElementById('transporte').textContent = datos.transporte;
+            document.getElementById('status_pedido').textContent = datos.status_pedido;
+            document.getElementById('direccion').textContent = datos.direccion;
+            document.getElementById('observaciones').textContent = datos.observaciones;
         }
 
-        // Llamar a la función al cargar la página
-        window.onload = getQueryParams;
+        // Llamamos a la función para simular la carga de datos
+        actualizarCampos();
     </script>
 </body>
 </html>
