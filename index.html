@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedido RM</title>
+    <title>Seguimiento de Pedidos Región Metropolitana Empresa YaganDepot</title>
     <style>
         /* Estilo general de la página */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #d8d1d1;
+            background-color: #fff; /* Fondo blanco */
+            color: #000; /* Texto negro */
             margin: 0;
             padding: 0;
         }
@@ -25,7 +26,7 @@
             width: 90%;
             max-width: 900px;
             margin: 40px auto;
-            background-color: #f9f9fcf1;
+            background-color: #fff; /* Fondo blanco */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(14, 13, 13, 0.1);
             padding: 20px;
@@ -36,7 +37,7 @@
             padding: 10px 0;
         }
 
-        /* Línea vertical negra */
+        /* Línea vertical */
         .timeline::before {
             content: '';
             position: absolute;
@@ -44,71 +45,94 @@
             top: 0;
             width: 3px;
             height: 100%;
-            background-color: #0f0f0f; /* Negro */
+            background-color: #000; /* Línea vertical de color negro */
             z-index: 0;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 100px; /* Aumentar el espacio entre los intervalos */
+            margin-bottom: 40px; /* Separación entre los intervalos */
             padding-left: 5px;
             z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Alineamos los íconos y contenido de manera espaciada */
         }
 
-        /* Eliminamos el punto verde, solo dejamos las líneas */
-        .timeline-item::after {
-            content: ''; /* Eliminamos el punto verde */
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            background-color: transparent; /* Sin color */
-            border-radius: 0;
-            z-index: 1;
+        .timeline-item .icon {
+            background-color: #fff; /* Fondo blanco */
+            color: #000; /* Texto negro */
+            border-radius: 50%;
+            width: 80px; /* Iconos más grandes */
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px; /* Tamaño del icono */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-right: 15px; /* Espaciado entre iconos y el contenido */
+        }
+
+        /* Línea de separación entre los iconos */
+        .timeline-item .separator {
+            height: 100%;
+            width: 3px;
+            background-color: #000; /* Línea vertical negra */
+            margin: 0 20px;
         }
 
         .timeline-content {
-            background-color: #070707ee;
-            padding: 15px 20px;
-            border-radius: 8px;
+            background-color: #fff; /* Fondo blanco */
+            padding: 20px 30px;
+            border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-left: 30px; /* Separación de la línea vertical */
             position: relative;
-            margin-left: -15px;
-            z-index: 1;
+            width: 100%;
+            color: #000; /* Texto negro */
         }
 
-        .timeline-content h3 {
-            font-size: 30px;
+        /* Estilos específicos por estado */
+        .en-ruta .timeline-content {
+            background-color: #f0110d; /* Rojo */
+            color: #fff; /* Texto blanco */
+        }
+
+        .entregado .timeline-content {
+            background-color: #10e714; /* Verde */
+            color: #fff; /* Texto blanco */
+        }
+
+        .pendiente .timeline-content {
+            background-color: #e3e309; /* Amarillo */
+            color: #000; /* Texto negro */
+        }
+
+        /* Estilo de texto */
+        .timeline-content h3, .timeline-content h2 {
+            font-size: 22px;
+            margin: 0 0 10px;
             font-weight: bold;
-            color: #0a0a0a; /* Negro */
-            margin: 0 0 10px 0;
+            color: #000;
         }
 
         .timeline-content p {
-            color: #141414;
+            color: #000;
             margin: 0 0 10px;
             font-size: 16px;
             font-weight: 500;
         }
 
-        /* Estilo de la sección "Estado del Pedido: Entregado" */
-        .timeline-item.entregado .timeline-content {
-            padding: 20px 20px 30px; /* Añadimos más espacio inferior */
-            margin-bottom: 40px; /* Aumentamos la separación entre el estado y la fecha de entrega */
-        }
-
-        .timeline-item .date {
-            margin-top: 20px; /* Agregar espacio adicional entre el estado y la fecha */
-            font-size: 16px;  /* Ajustamos el tamaño de la fecha para darle un toque más grande */
-            padding: 10px 15px;  /* Un poco más de padding para que se vea más amplio */
+        .date {
+            margin-top: 20px;
+            font-size: 16px;
+            padding: 10px 15px;
         }
 
         /* Media Queries para mejorar la visualización en móviles */
         @media (max-width: 768px) {
             .timeline-container {
-                width: 100%; /* Ocupa todo el ancho disponible en dispositivos más pequeños */
+                width: 100%;
                 padding: 10px;
             }
 
@@ -122,27 +146,19 @@
                 width: 3px;
             }
 
-            .timeline-item::after {
-                left: 26px;
-            }
-
-            /* Ajustes de los márgenes en móvil para asegurar buena visualización */
-            .timeline-item.entregado .timeline-content {
-                margin-bottom: 30px; /* Menos espacio en dispositivos más pequeños */
-            }
-
             .timeline-item .date {
-                font-size: 14px; /* Ajustamos el tamaño de la fuente */
-                margin-top: 15px; /* Menos espacio arriba */
+                font-size: 14px;
+                margin-top: 15px;
             }
 
-            /* Asegurando que el fondo verde de los estados se vea más ancho */
-            .timeline-item.entregado .timeline-content,
-            .timeline-item.en_ruta .timeline-content {
-                width: 100%; /* Hacemos que el fondo verde ocupe todo el espacio disponible */
-                margin: 0;
-                padding: 15px;
-                box-sizing: border-box;
+            .icon {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+
+            .separator {
+                margin: 0 15px;
             }
         }
 
@@ -152,50 +168,40 @@
             }
 
             .timeline-content h3 {
-                font-size: 26px;
+                font-size: 18px;
             }
 
             .timeline-content p {
-                font-size: 20px;
+                font-size: 14px;
             }
 
             .date {
                 font-size: 12px;
                 padding: 8px 14px;
-                margin-top: 12px; /* Aseguramos que el espacio entre el estado y la fecha de entrega sea apropiado */
             }
-        }
 
-        .status-pedido {
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
+            .icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
 
-        .entregado {
-            background-color: #dff0d8; /* Verde */
-            color: #10e714;
-        }
-
-        .en-ruta {
-            background-color: #dff0d8; /* Fondo igual al de Estado del Pedido */
-            color: #f0110d; /* Rojo */
-        }
-
-        .pendiente {
-            background-color: #fcf8e3; /* Amarillo */
-            color: #e3f309;
+            .separator {
+                margin: 0 10px;
+            }
         }
 
     </style>
 </head>
 <body>
-    <h1>Seguimiento Pedidos RM</h1>
+    <h1>Seguimiento de Pedidos Región Metropolitana Empresa Yagan Depot</h1>
 
     <div class="timeline-container">
         <div class="timeline">
             <!-- Estado de Pedido: En Ruta -->
-            <div class="timeline-item en_ruta">
+            <div class="timeline-item en-ruta">
+                <div class="icon">&#128230;</div> <!-- Icono de caja de encomienda para "En Ruta" -->
+                <div class="separator"></div> <!-- Línea vertical entre iconos -->
                 <div class="timeline-content en-ruta">
                     <h2>Estado del Pedido: En Ruta</h2>
                     <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
@@ -213,8 +219,20 @@
                 </div>
             </div>
 
+            <!-- Estado de Pedido: En Camino (Nuevo Estado) -->
+            <div class="timeline-item">
+                <div class="icon">&#128666;</div> <!-- Icono de camión de entrega para "En Camino" -->
+                <div class="separator"></div> <!-- Línea vertical entre iconos -->
+                <div class="timeline-content">
+                    <h2>Estado del Pedido: En Camino</h2>
+                    <p>Información adicional sobre el estado en camino...</p>
+                </div>
+            </div>
+
             <!-- Estado de Pedido: Entregado -->
             <div class="timeline-item entregado">
+                <div class="icon">&#128230;</div> <!-- Icono de entrega para "Entregado" -->
+                <div class="separator"></div> <!-- Línea vertical entre iconos -->
                 <div class="timeline-content entregado">
                     <h3>Estado del Pedido: Entregado</h3>
                     <p class="date">Fecha de Entrega: <span id="fecha_entrega"></span></p>
@@ -262,17 +280,6 @@
             document.getElementById('direccion').textContent = params.direccion || '';
             document.getElementById('observaciones').textContent = params.observaciones || '';
             document.getElementById('fecha_entrega').textContent = params.fecha_entrega || '';
-
-            // Cambiar el fondo según el estado del pedido
-            const status = params.status_pedido?.toLowerCase();
-            const timelineItem = document.querySelector('.timeline-item');
-            if (status === 'entregado') {
-                timelineItem.classList.add('entregado');
-            } else if (status === 'en ruta') {
-                timelineItem.classList.add('en-ruta');
-            } else {
-                timelineItem.classList.add('pendiente');
-            }
         }
 
         // Llamar a la función para actualizar los campos al cargar la página
@@ -280,3 +287,4 @@
     </script>
 </body>
 </html>
+
