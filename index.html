@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedidos Región Metropolitana YaganDepot</title> <!-- Título actualizado -->
+    <title>Seguimiento de Pedidos Región Metropolitana YaganDepot</title>
     <style>
         /* Estilo general de la página */
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #fff; /* Fondo blanco */
-            color: #000; /* Texto negro */
+            background-color: #fff;
+            color: #000;
             margin: 0;
             padding: 0;
-            font-weight: bold; /* Texto en negrita */
+            font-weight: bold;
         }
 
         h1 {
@@ -23,11 +23,19 @@
             text-transform: uppercase;
         }
 
+        .fecha-actual {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+
         .timeline-container {
             width: 90%;
             max-width: 900px;
             margin: 40px auto;
-            background-color: #fff; /* Fondo blanco */
+            background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(14, 13, 13, 0.1);
             padding: 20px;
@@ -38,7 +46,6 @@
             padding: 10px 0;
         }
 
-        /* Línea vertical */
         .timeline::before {
             content: '';
             position: absolute;
@@ -46,74 +53,72 @@
             top: 0;
             width: 3px;
             height: 100%;
-            background-color: #000; /* Línea vertical de color negro */
+            background-color: #000;
             z-index: 0;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 40px; /* Separación entre los intervalos */
+            margin-bottom: 40px;
             padding-left: 5px;
             z-index: 1;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Alineamos los íconos y contenido de manera espaciada */
+            justify-content: space-between;
         }
 
         .timeline-item .icon {
-            background-color: #fff; /* Fondo blanco */
-            color: #000; /* Texto negro */
+            background-color: #fff;
+            color: #000;
             border-radius: 50%;
-            width: 80px; /* Iconos más grandes */
+            width: 80px;
             height: 80px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px; /* Tamaño del icono */
+            font-size: 40px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-right: 15px; /* Espaciado entre iconos y el contenido */
+            margin-right: 15px;
         }
 
-        /* Línea de separación entre los iconos */
         .timeline-item .separator {
             height: 100%;
             width: 3px;
-            background-color: #000; /* Línea vertical negra */
+            background-color: #000;
             margin: 0 20px;
         }
 
         .timeline-content {
-            background-color: #fff; /* Fondo blanco */
+            background-color: #fff;
             padding: 20px 30px;
             border-radius: 10px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            margin-left: 30px; /* Separación de la línea vertical */
+            margin-left: 30px;
             position: relative;
             width: 100%;
-            color: #000; /* Texto negro */
+            color: #000;
         }
 
         /* Estilos específicos por estado */
         .en-ruta .timeline-content {
-            background-color: #eb1b1b; /* Rojo */
-            color: #fff; /* Texto blanco */
+            background-color: #fff; /* Fondo blanco para "En Ruta" */
+            color: #000;
         }
 
         .entregado .timeline-content {
             background-color: #10e714; /* Verde */
-            color: #fff; /* Texto blanco */
+            color: #fff;
         }
 
         .pendiente .timeline-content {
             background-color: #e3e309; /* Amarillo */
-            color: #000; /* Texto negro */
+            color: #000;
         }
 
-        /* Estilo de texto */
         .timeline-content h3, .timeline-content h2 {
             font-size: 22px;
             margin: 0 0 10px;
-            font-weight: bold; /* Negrita */
+            font-weight: bold;
             color: #000;
         }
 
@@ -121,7 +126,7 @@
             color: #000;
             margin: 0 0 10px;
             font-size: 16px;
-            font-weight: bold; /* Negrita */
+            font-weight: bold;
         }
 
         .date {
@@ -130,7 +135,7 @@
             padding: 10px 15px;
         }
 
-        /* Media Queries para mejorar la visualización en móviles */
+        /* Media Queries */
         @media (max-width: 768px) {
             .timeline-container {
                 width: 100%;
@@ -192,21 +197,26 @@
             }
         }
 
+        /* Estado "Entregado" oculto por defecto */
+        .estado-entregado {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h1>Seguimiento de Pedidos Región Metropolitana YaganDepot</h1> <!-- Título actualizado -->
+    <h1>Seguimiento de Pedidos Región Metropolitana YaganDepot</h1>
+
+    <!-- Fecha Actual debajo del título -->
+    <div class="fecha-actual" id="fecha-actual"></div>
 
     <div class="timeline-container">
         <div class="timeline">
             <!-- Estado de Pedido: En Ruta -->
             <div class="timeline-item en-ruta">
-                <div class="icon">&#128230;</div> <!-- Icono de caja de encomienda para "En Ruta" -->
-                <div class="separator"></div> <!-- Línea vertical entre iconos -->
+                <div class="icon">&#128230;</div>
+                <div class="separator"></div>
                 <div class="timeline-content en-ruta">
                     <h2>Estado del Pedido: En Ruta</h2>
-                    <p>HORA DE SALIDA: <span id="hora_salida"></span></p>
-                    <p>FECHA DE SALIDA CD: <span id="fecha_salida"></span></p>
                     <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
                     <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
                     <p>FACTURA: <span id="factura"></span></p>
@@ -214,29 +224,30 @@
                     <p>BULTOS: <span id="bultos"></span></p>
                     <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
                     <p>TRANSPORTE: <span id="transporte"></span></p>
-                    <p>STATUS PEDIDO: <span id="status_pedido"></span></p>
-                    <p>DIRECCION: <span id="direccion"></span></p>
                     <p>OBSERVACIONES: <span id="observaciones"></span></p>
                 </div>
             </div>
 
-            <!-- Estado de Pedido: En Camino (Nuevo Estado) -->
+            <!-- Estado de Pedido: En Camino -->
             <div class="timeline-item">
-                <div class="icon">&#128666;</div> <!-- Icono de camión de entrega para "En Camino" -->
-                <div class="separator"></div> <!-- Línea vertical entre iconos -->
+                <div class="icon">&#128666;</div>
+                <div class="separator"></div>
                 <div class="timeline-content">
                     <h2>Estado del Pedido: En Camino</h2>
-                    <p>Información adicional sobre el estado en camino...</p>
+                    <p>HORA DE SALIDA: <span id="hora_salida_camino"></span></p>
+                    <p>FECHA DE SALIDA CD: <span id="fecha_salida_camino"></span></p>
                 </div>
             </div>
 
-            <!-- Estado de Pedido: Entregado -->
-            <div class="timeline-item entregado">
-                <div class="icon">&#128230;</div> <!-- Icono de entrega para "Entregado" -->
-                <div class="separator"></div> <!-- Línea vertical entre iconos -->
+            <!-- Estado de Pedido: Entregado (Oculto por defecto) -->
+            <div class="timeline-item entregado estado-entregado" id="estado_entregado">
+                <div class="icon">&#128230;</div>
+                <div class="separator"></div>
                 <div class="timeline-content entregado">
                     <h3>Estado del Pedido: Entregado</h3>
-                    <p class="date">Fecha de Entrega: <span id="fecha_entrega"></span></p>
+                    <p>Status: <span id="status_pedido_entregado"></span></p>
+                    <p>Fecha de Entrega: <span id="fecha_entrega"></span></p>
+                    <p>DIRECCION: <span id="direccion"></span></p>
                 </div>
             </div>
         </div>
@@ -268,19 +279,39 @@
             const params = obtenerParametrosURL();
 
             // Asignar los valores de los parámetros a los elementos HTML
-            document.getElementById('hora_salida').textContent = params.hora_salida || '';
-            document.getElementById('fecha_salida').textContent = params.fecha_salida || '';
-            document.getElementById('nota_venta').textContent = params.nota_venta || '';
-            document.getElementById('tipo_documento').textContent = params.tipo_documento || '';
-            document.getElementById('factura').textContent = params.factura || '';
-            document.getElementById('cliente').textContent = params.cliente || '';
-            document.getElementById('bultos').textContent = params.bultos || '';
-            document.getElementById('responsable_entrega').textContent = params.responsable_entrega || '';
-            document.getElementById('transporte').textContent = params.transporte || '';
-            document.getElementById('status_pedido').textContent = params.status_pedido || '';
-            document.getElementById('direccion').textContent = params.direccion || '';
-            document.getElementById('observaciones').textContent = params.observaciones || '';
-            document.getElementById('fecha_entrega').textContent = params.fecha_entrega || '';
+            document.getElementById('nota_venta').textContent = params.nota_venta || 'N/A';
+            document.getElementById('tipo_documento').textContent = params.tipo_documento || 'N/A';
+            document.getElementById('factura').textContent = params.factura || 'N/A';
+            document.getElementById('cliente').textContent = params.cliente || 'N/A';
+            document.getElementById('bultos').textContent = params.bultos || 'N/A';
+            document.getElementById('responsable_entrega').textContent = params.responsable_entrega || 'N/A';
+            document.getElementById('transporte').textContent = params.transporte || 'N/A';
+            document.getElementById('observaciones').textContent = params.observaciones || 'N/A';
+
+            // Actualizar el estado "En Camino"
+            document.getElementById('hora_salida_camino').textContent = params.hora_salida || 'N/A';
+            document.getElementById('fecha_salida_camino').textContent = params.fecha_salida || 'N/A';
+
+            // Actualizar el estado "Entregado"
+            document.getElementById('status_pedido_entregado').textContent = params.status_pedido || 'N/A';
+            document.getElementById('fecha_entrega').textContent = params.fecha_entrega || 'N/A';
+            document.getElementById('direccion').textContent = params.direccion || 'N/A';
+
+            // Mostrar la fecha actual
+            const fechaActual = new Date();
+            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+            const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+            document.getElementById('fecha-actual').textContent = `Fecha Actual: ${fechaFormateada}`;
+
+            // Cambiar la visibilidad del estado "Entregado" según el STATUS
+            const estadoEntregado = document.getElementById('estado_entregado');
+            const estado = params.status_pedido;
+
+            if (estado === 'entregado') {
+                estadoEntregado.style.display = 'block'; // Mostrar cuando el estado es "Entregado"
+            } else {
+                estadoEntregado.style.display = 'none'; // Ocultar en otros estados
+            }
         }
 
         // Llamar a la función para actualizar los campos al cargar la página
