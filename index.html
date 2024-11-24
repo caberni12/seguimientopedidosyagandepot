@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedidos Región Metropolitana Logística</title>
-
+    <title>Seguimiento de Pedidos Centro de Distribución Yagandepot Pudahuel</title>
     <!-- Incluir Font Awesome para los iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <style>
         /* Estilo general de la página */
         body {
@@ -18,13 +16,44 @@
             padding: 0;
             font-weight: bold;
             text-transform: uppercase; /* Todo el texto en mayúsculas */
+            overflow: hidden; /* Evita el desplazamiento durante el loading */
+        }
+
+        /* Contenedor de loading */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #000;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Animación de rotación para el spinner */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         h1 {
             text-align: center;
             font-size: 28px;
+            font-weight: bold; /* Titulo en negrita */
             color: #000;
-            margin-top: 40px;
+            margin-top: 20px;
             text-transform: uppercase;
             display: inline-block; /* Para que se pueda alinear con el logo */
             margin-right: 20px;
@@ -36,28 +65,24 @@
             align-items: center;
             justify-content: center;
             margin-top: 20px;
+            flex-direction: column;
         }
 
-        /* Estilos para el logo */
-        .logo {
-            height: 50px; /* Ajusta el tamaño del logo */
-            margin-right: 20px; /* Espacio entre el logo y el título */
-        }
-
-        /* Estilo para el icono de transporte */
-        .transport-icon {
-            font-size: 40px; /* Tamaño del icono */
-            margin-right: 20px; /* Espacio entre el icono y el título */
-            color: #000; /* Color del icono */
-        }
-
+        /* Estilo para la fecha */
         .fecha-actual {
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
             color: #333;
-            margin-top: 10px;
+            margin-bottom: 10px; /* Asegura que la fecha esté encima del título */
             font-weight: normal;
             text-transform: uppercase; /* Fecha en mayúsculas */
+        }
+
+        /* Estilos para el icono de transporte */
+        .transport-icon {
+            font-size: 80px; /* Tamaño del icono */
+            margin-right: 10px; /* Espacio entre el icono y el título */
+            color: #000; /* Color del icono */
         }
 
         .timeline-container {
@@ -202,56 +227,45 @@
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 20px;
+            .timeline-container {
+                width: 100%;
+                padding: 10px;
             }
 
-            .timeline-content h3 {
-                font-size: 18px;
+            .header-container {
+                flex-direction: column;
+                align-items: center;
             }
 
-            .timeline-content p {
-                font-size: 14px;
-            }
-
-            .date {
-                font-size: 12px;
-                padding: 8px 14px;
-            }
-
-            .icon {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-            }
-
-            .separator {
-                margin: 0 10px;
+            .timeline-content {
+                padding: 12px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Contenedor para logo y título -->
-    <div class="header-container">
-        <!-- Icono de transporte -->
-        <i class="fas fa-truck transport-icon"></i> <!-- Icono de camión -->
-        <h1>Seguimiento de Pedidos Región Metropolitana Logística</h1>
-        <i class="fas fa-truck transport-icon"></i> <!-- Icono de camión -->
-    
+    <!-- Spinner de carga -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
     </div>
 
-    <!-- Fecha Actual debajo del título -->
-    <div class="fecha-actual" id="fecha-actual"></div>
+    <!-- Contenido de la página -->
+    <div class="header-container">
+        <!-- Fecha actual -->
+        <div class="fecha-actual" id="fecha-actual"></div>
 
-    <div class="timeline-container">
+        <!-- Título principal -->
+        <h1>Seguimiento de Pedidos Centro de Distribución Yagandepot Pudahuel</h1>
+    </div>
+
+    <!-- Contenido del seguimiento -->
+    <div class="timeline-container" id="contenido-pedido" style="display: none;">
         <div class="timeline">
-            <!-- Estado de Pedido: En Ruta -->
-            <div class="timeline-item en-ruta">
-                <div class="icon">&#128230;</div>
+            <div class="timeline-item">
+                <div class="icon">&#128209;</div>
                 <div class="separator"></div>
-                <div class="timeline-content en-ruta">
-                    <h2>Estado del Pedido: En Ruta</h2>
+                <div class="timeline-content">
+                    <h1>Seguimiento de Pedido</h1>
                     <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
                     <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
                     <p>FACTURA: <span id="factura"></span></p>
@@ -262,14 +276,14 @@
                 </div>
             </div>
 
-            <!-- Estado de Pedido: En Camino -->
-            <div class="timeline-item">
+            <!-- Estado En Ruta -->
+            <div class="timeline-item en-ruta">
                 <div class="icon">&#128666;</div>
                 <div class="separator"></div>
-                <div class="timeline-content">
-                    <h2>Estado del Pedido: En Transito</h2>
-                    <p>HORA DE SALIDA: <span id="hora_salida_camino"></span></p>
-                    <p>FECHA DE SALIDA CD: <span id="fecha_salida_camino"></span></p>
+                <div class="timeline-content" id="contenido_en_ruta">
+                    <h3>Estado En Ruta</h3>
+                    <p>Hora de Salida: <span id="hora_salida_camino"></span></p>
+                    <p>Fecha de Salida CD: <span id="fecha_salida_camino"></span></p>
                 </div>
             </div>
 
@@ -287,11 +301,22 @@
                     <p>OBSERVACIONES: <span id="observaciones_final"></span></p>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
+        // Obtener fecha actual en formato de texto
+        function obtenerFechaActual() {
+            const fecha = new Date();
+            const dias = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+            const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+            const dia = dias[fecha.getDay()];
+            const mes = meses[fecha.getMonth()];
+            const año = fecha.getFullYear();
+            const fechaActual = `${dia} ${fecha.getDate()} de ${mes} de ${año}`;
+            document.getElementById('fecha-actual').textContent = fechaActual;
+        }
+
         // Función para obtener los parámetros de la URL
         function obtenerParametrosURL() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -339,8 +364,21 @@
             document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
         }
 
-        // Cargar la información al cargar la página
-        window.onload = cargarInformacion;
+        // Función para ocultar el loading y mostrar el contenido después de 2.5 segundos
+        function ocultarLoading() {
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('contenido-pedido').style.display = 'block';
+                document.body.style.overflow = 'auto';  // Habilitar el scroll
+            }, 2500); // Esperar 2.5 segundos antes de ocultar el loading
+        }
+
+        // Cargar la información y la fecha actual al cargar la página
+        window.onload = function() {
+            obtenerFechaActual(); // Mostrar la fecha actual
+            cargarInformacion();  // Cargar la información
+            ocultarLoading();     // Ocultar el loading
+        };
     </script>
 </body>
 </html>
