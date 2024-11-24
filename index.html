@@ -257,16 +257,16 @@
                 <div class="timeline-content">
                     <h2>Estado del Pedido: En Transito</h2>
                     <p>HORA DE SALIDA: <span id="hora_salida_camino"></span></p>
-                    <p>FECHA DE SALIDA CD: <span id="fecha_salida_camino"></span></p>
+                    <p>FECHA DE SALIDA: <span id="fecha_salida_camino"></span></p>
                 </div>
             </div>
 
-            <!-- Estado de Pedido: Entregado (solo visible si el estado es entregado) -->
+            <!-- Estado Final del Pedido: Entregado -->
             <div class="timeline-item entregado" id="contenido_entregado">
-                <div class="icon">&#9989;</div>
+                <div class="icon">&#128666;</div>
                 <div class="separator"></div>
                 <div class="timeline-content entregado">
-                    <h2>Estado Final: Pedido Entregado</h2>
+                    <h2>Pedido Entregado</h2>
                     <p>Status: <span id="status_pedido_entregado"></span></p>
                     <p>Fecha de Entrega: <span id="fecha_entrega"></span></p>
                     <p>DIRECCION: <span id="direccion"></span></p>
@@ -325,14 +325,14 @@
             document.getElementById('rut_persona').textContent = parametros.rut_persona || 'N/A';
             document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
 
-            // Verificar el estado del pedido
+            // Mostrar solo el intervalo de "Entregado" si el estado del pedido es "entregado"
             if (parametros.status_pedido === 'entregado') {
                 document.getElementById('contenido_entregado').style.display = 'block';
             } else {
                 document.getElementById('contenido_entregado').style.display = 'none';
             }
 
-            // Mostrar el contenido
+            // Mostrar el contenido del pedido
             document.getElementById('contenido-pedido').style.display = 'block';
         }
 
