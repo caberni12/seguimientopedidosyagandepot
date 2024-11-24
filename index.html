@@ -3,18 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedidos</title>
+    <title>Seguimiento de Pedidos Región Metropolitana Departamento de Logistica de Centro Distribucion Yagandepot Pudahuel.</title>
+    <!-- Incluir Font Awesome para los iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Estilos generales */
+        /* Estilo general de la página */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #fff;
             color: #000;
             margin: 0;
             padding: 0;
             font-weight: bold;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
+            overflow: hidden; /* Evita el desplazamiento durante el loading */
+        }
+
+        /* Contenedor de loading */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+        }
+
+        .loading .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #000;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Texto de "Cargando Información" al lado del spinner */
+        .loading .text {
+            color: #fff;
+            font-size: 20px;
+            margin-left: 20px;
+            font-weight: bold;
             text-transform: uppercase;
+        }
+
+        /* Animación de rotación para el spinner */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         h1 {
@@ -23,8 +64,11 @@
             color: #000;
             margin-top: 40px;
             text-transform: uppercase;
+            display: inline-block; /* Para que se pueda alinear con el logo */
+            margin-right: 20px;
         }
 
+        /* Contenedor del logo y el título */
         .header-container {
             display: flex;
             align-items: center;
@@ -32,13 +76,27 @@
             margin-top: 20px;
         }
 
+        /* Estilo para la fecha */
         .fecha-actual {
             text-align: center;
             font-size: 20px;
             color: #333;
-            margin-top: 10px;
+            margin-bottom: 10px; /* Asegura que la fecha esté encima del título */
             font-weight: normal;
-            text-transform: uppercase;
+            text-transform: uppercase; /* Fecha en mayúsculas */
+        }
+
+        /* Estilos para el logo */
+        .logo {
+            height: 50px; /* Ajusta el tamaño del logo */
+            margin-right: 10px; /* Espacio entre el logo y el título */
+        }
+
+        /* Estilo para el icono de transporte */
+        .transport-icon {
+            font-size: 80px; /* Tamaño del icono */
+            margin-right: 10px; /* Espacio entre el icono y el título */
+            color: #000; /* Color del icono */
         }
 
         .timeline-container {
@@ -78,15 +136,24 @@
         }
 
         .timeline-item .icon {
-            background-color: transparent;
-            color: #000;
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
+            background-color: transparent; /* Fondo transparente */
+            color: #000; /* Color del icono */
+            border-radius: 50%; /* Redondear los bordes para formar un círculo */
+            width: 70px; /* Tamaño del icono */
+            height: 70px; /* Tamaño del icono */
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 40px;
+            box-shadow: none; /* Eliminar sombra que forma el círculo alrededor del icono */
+            margin-right: 15px;
+        }
+
+        .timeline-item .separator {
+            height: 100%;
+            width: 3px;
+            background-color: #000;
+            margin: 0 20px;
         }
 
         .timeline-content {
@@ -98,70 +165,113 @@
             position: relative;
             width: 100%;
             color: #000;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
+        }
+
+        /* Estilos específicos por estado */
+        .en-ruta .timeline-content {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .entregado .timeline-content {
+            background-color: #ffffff; /* Fondo verde para "Entregado" */
+            color: #fff;
+        }
+
+        .pendiente .timeline-content {
+            background-color: #e3e309; /* Amarillo */
+            color: #000;
+        }
+
+        .timeline-content h3, .timeline-content h2 {
+            font-size: 22px;
+            margin: 0 0 10px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .timeline-content p {
+            color: #000;
+            margin: 0 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
         }
 
         .date {
             margin-top: 20px;
             font-size: 16px;
-        }
-        
-        /* Estilo para el loading */
-        #loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
-            transition: opacity 0.5s ease-in-out; /* Transición suave para ocultar el loader */
+            padding: 10px 15px;
+            text-transform: uppercase; /* Fecha en mayúsculas */
         }
 
-        /* Estilo del círculo giratorio */
-        .spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 2.5s linear infinite; /* Duración del giro: 2.5s */
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .timeline-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+                padding-left: 12px;
+            }
+
+            .timeline::before {
+                left: 20px;
+                width: 3px;
+            }
+
+            .timeline-item .date {
+                font-size: 14px;
+                margin-top: 15px;
+            }
+
+            .icon {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+
+            .separator {
+                margin: 0 15px;
+            }
         }
 
-        .loading-text {
-            font-size: 18px;
-            color: #333;
-            margin-left: 20px;
-            font-weight: bold;
-        }
+        @media (max-width: 480px) {
+            .timeline-container {
+                width: 100%;
+                padding: 10px;
+            }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline-content {
+                padding: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Loader visible al principio -->
-    <div id="loading">
+    <!-- Spinner de carga con texto -->
+    <div class="loading" id="loading">
         <div class="spinner"></div>
-        <div class="loading-text">Cargando Información...</div>
+        <div class="text">Cargando Información...</div>
     </div>
 
-    <div class="header-container">
-        <h1>Seguimiento de Pedidos - Centro de Distribución Yagandepot Pudahuel</h1>
-    </div>
-    
-    <div class="fecha-actual" id="fecha-actual"></div>
-
-    <div class="timeline-container">
+    <!-- Contenido de la página -->
+    <div class="timeline-container" id="contenido-pedido" style="display: none;">
         <div class="timeline">
             <div class="timeline-item">
-                <div class="icon">&#128230;</div>
+                <div class="icon">&#128209;</div>
+                <div class="separator"></div>
                 <div class="timeline-content">
-                    <h2>Estado del Pedido: En Ruta</h2>
+                    <h1>Seguimiento de Pedido</h1>
                     <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
                     <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
                     <p>FACTURA: <span id="factura"></span></p>
@@ -172,20 +282,23 @@
                 </div>
             </div>
 
-            <div class="timeline-item">
-                <div class="icon">&#128666;</div>
-                <div class="timeline-content">
-                    <h2>Estado del Pedido: En Transito</h2>
-                    <p>HORA DE SALIDA: <span id="hora_salida_camino"></span></p>
-                    <p>FECHA DE SALIDA: <span id="fecha_salida_camino"></span></p>
+            <!-- Estado de En Ruta -->
+            <div class="timeline-item en-ruta">
+                <div class="icon">&#128666;</div> <!-- Icono de camión -->
+                <div class="separator"></div>
+                <div class="timeline-content" id="contenido_en_ruta">
+                    <h3>Estado En Ruta</h3>
+                    <p>Hora de Salida: <span id="hora_salida_camino"></span></p>
+                    <p>Fecha de Salida CD: <span id="fecha_salida_camino"></span></p>
                 </div>
             </div>
 
-            <!-- Estado Final del Pedido: Entregado -->
-            <div class="timeline-item" id="contenido_entregado" style="display: none;">
+            <!-- Estado de Pedido: Entregado -->
+            <div class="timeline-item entregado">
                 <div class="icon">&#128230;</div>
-                <div class="timeline-content">
-                    <h2>Pedido Entregado</h2>
+                <div class="separator"></div>
+                <div class="timeline-content entregado" id="contenido_entregado">
+                    <h3>Estado Final del Pedido</h3>
                     <p>Status: <span id="status_pedido_entregado"></span></p>
                     <p>Fecha de Entrega: <span id="fecha_entrega"></span></p>
                     <p>DIRECCION: <span id="direccion"></span></p>
@@ -236,19 +349,29 @@
             document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
             document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
 
-            // Estado Final: Mostrar solo si está "entregado"
-            if (parametros.status_pedido && parametros.status_pedido.toLowerCase() === 'entregado') {
-                document.getElementById('contenido_entregado').style.display = 'block';
-            }
-
-            // Ocultar el loading después de 2.5 segundos
-            setTimeout(function() {
-                document.getElementById('loading').style.display = 'none';
-            }, 2500);
+            // Estado Final
+            document.getElementById('status_pedido_entregado').textContent = parametros.status_pedido || 'N/A';
+            document.getElementById('fecha_entrega').textContent = parametros.fecha_entrega || 'N/A';
+            document.getElementById('direccion').textContent = parametros.direccion || 'N/A';
+            document.getElementById('persona_recibe').textContent = parametros.persona_recibe || 'N/A';
+            document.getElementById('rut_persona').textContent = parametros.rut_persona || 'N/A';
+            document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
         }
 
-        // Cargar la información al cargar la página
-        window.onload = cargarInformacion;
+        // Función para ocultar el loading y mostrar el contenido después de 2.5 segundos
+        function ocultarLoading() {
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('contenido-pedido').style.display = 'block';
+                document.body.style.overflow = 'auto';  // Habilitar el scroll
+            }, 2500); // Esperar 2.5 segundos antes de ocultar el loading
+        }
+
+        // Cargar la información y la fecha actual al cargar la página
+        window.onload = function() {
+            cargarInformacion();
+            ocultarLoading();
+        };
     </script>
 </body>
 </html>
