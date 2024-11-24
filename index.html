@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedidos Región Metropolitana YaganDepot</title>
+    <title>Seguimiento de Pedidos Región Metropolitana Logística</title>
+
+    <!-- Incluir Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         /* Estilo general de la página */
         body {
@@ -22,6 +26,29 @@
             color: #000;
             margin-top: 40px;
             text-transform: uppercase;
+            display: inline-block; /* Para que se pueda alinear con el logo */
+            margin-right: 20px;
+        }
+
+        /* Contenedor del logo y el título */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Estilos para el logo */
+        .logo {
+            height: 50px; /* Ajusta el tamaño del logo */
+            margin-right: 20px; /* Espacio entre el logo y el título */
+        }
+
+        /* Estilo para el icono de transporte */
+        .transport-icon {
+            font-size: 40px; /* Tamaño del icono */
+            margin-right: 20px; /* Espacio entre el icono y el título */
+            color: #000; /* Color del icono */
         }
 
         .fecha-actual {
@@ -70,16 +97,16 @@
         }
 
         .timeline-item .icon {
-            background-color: #fff;
-            color: #000;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
+            background-color: transparent; /* Fondo transparente */
+            color: #000; /* Color del icono */
+            border-radius: 50%; /* Redondear los bordes para formar un círculo */
+            width: 70px; /* Tamaño del icono */
+            height: 70px; /* Tamaño del icono */
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: none; /* Eliminar sombra que forma el círculo alrededor del icono */
             margin-right: 15px;
         }
 
@@ -205,7 +232,14 @@
     </style>
 </head>
 <body>
-    <h1>Seguimiento de Pedidos Región Metropolitana YaganDepot</h1>
+    <!-- Contenedor para logo y título -->
+    <div class="header-container">
+        <!-- Icono de transporte -->
+        <i class="fas fa-truck transport-icon"></i> <!-- Icono de camión -->
+        <h1>Seguimiento de Pedidos Región Metropolitana Logística</h1>
+        <i class="fas fa-truck transport-icon"></i> <!-- Icono de camión -->
+    
+    </div>
 
     <!-- Fecha Actual debajo del título -->
     <div class="fecha-actual" id="fecha-actual"></div>
@@ -225,7 +259,6 @@
                     <p>BULTOS: <span id="bultos"></span></p>
                     <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
                     <p>TRANSPORTE: <span id="transporte"></span></p>
-                    <p>OBSERVACIONES: <span id="observaciones"></span></p>
                 </div>
             </div>
 
@@ -234,13 +267,13 @@
                 <div class="icon">&#128666;</div>
                 <div class="separator"></div>
                 <div class="timeline-content">
-                    <h2>Estado del Pedido:En Transito</h2>
+                    <h2>Estado del Pedido: En Transito</h2>
                     <p>HORA DE SALIDA: <span id="hora_salida_camino"></span></p>
                     <p>FECHA DE SALIDA CD: <span id="fecha_salida_camino"></span></p>
                 </div>
             </div>
 
-            <!-- Estado de Pedido: Entregado (Siempre Visible) -->
+            <!-- Estado de Pedido: Entregado -->
             <div class="timeline-item entregado">
                 <div class="icon">&#128230;</div>
                 <div class="separator"></div>
@@ -251,6 +284,7 @@
                     <p>DIRECCION: <span id="direccion"></span></p>
                     <p>Persona que recibe: <span id="persona_recibe"></span></p>
                     <p>RUT Persona: <span id="rut_persona"></span></p>
+                    <p>OBSERVACIONES: <span id="observaciones_final"></span></p>
                 </div>
             </div>
 
@@ -269,51 +303,44 @@
                 bultos: urlParams.get('bultos'),
                 responsable_entrega: urlParams.get('responsable_entrega'),
                 transporte: urlParams.get('transporte'),
-                observaciones: urlParams.get('observaciones'),
                 hora_salida: urlParams.get('hora_salida'),
                 fecha_salida: urlParams.get('fecha_salida'),
                 status_pedido: urlParams.get('status_pedido'),
                 fecha_entrega: urlParams.get('fecha_entrega'),
                 direccion: urlParams.get('direccion'),
                 persona_recibe: urlParams.get('persona_recibe'),
-                rut_persona: urlParams.get('rut_persona')
+                rut_persona: urlParams.get('rut_persona'),
+                observaciones: urlParams.get('observaciones')
             };
         }
 
-        // Función para actualizar los campos HTML con los datos de la URL
-        function actualizarCampos() {
-            const params = obtenerParametrosURL();
+        // Función para cargar la información en el HTML
+        function cargarInformacion() {
+            const parametros = obtenerParametrosURL();
 
-            // Actualizar "Estado del Pedido: En Ruta"
-            document.getElementById('nota_venta').textContent = params.nota_venta || 'N/A';
-            document.getElementById('tipo_documento').textContent = params.tipo_documento || 'N/A';
-            document.getElementById('factura').textContent = params.factura || 'N/A';
-            document.getElementById('cliente').textContent = params.cliente || 'N/A';
-            document.getElementById('bultos').textContent = params.bultos || 'N/A';
-            document.getElementById('responsable_entrega').textContent = params.responsable_entrega || 'N/A';
-            document.getElementById('transporte').textContent = params.transporte || 'N/A';
-            document.getElementById('observaciones').textContent = params.observaciones || 'N/A';
+            document.getElementById('nota_venta').textContent = parametros.nota_venta || 'N/A';
+            document.getElementById('tipo_documento').textContent = parametros.tipo_documento || 'N/A';
+            document.getElementById('factura').textContent = parametros.factura || 'N/A';
+            document.getElementById('cliente').textContent = parametros.cliente || 'N/A';
+            document.getElementById('bultos').textContent = parametros.bultos || 'N/A';
+            document.getElementById('responsable_entrega').textContent = parametros.responsable_entrega || 'N/A';
+            document.getElementById('transporte').textContent = parametros.transporte || 'N/A';
 
-            // Actualizar "Estado del Pedido: En Camino"
-            document.getElementById('hora_salida_camino').textContent = params.hora_salida || 'N/A';
-            document.getElementById('fecha_salida_camino').textContent = params.fecha_salida || 'N/A';
+            // Estado de En Ruta
+            document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
+            document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
 
-            // Actualizar "Estado del Pedido: Entregado"
-            document.getElementById('status_pedido_entregado').textContent = params.status_pedido || 'N/A';
-            document.getElementById('fecha_entrega').textContent = params.fecha_entrega || 'N/A';
-            document.getElementById('direccion').textContent = params.direccion || 'N/A';
-            document.getElementById('persona_recibe').textContent = params.persona_recibe || 'N/A';
-            document.getElementById('rut_persona').textContent = params.rut_persona || 'N/A';
-
-            // Mostrar la fecha actual
-            const fechaActual = new Date();
-            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-            const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
-            document.getElementById('fecha-actual').textContent = `Fecha Actual: ${fechaFormateada}`;
+            // Estado Final
+            document.getElementById('status_pedido_entregado').textContent = parametros.status_pedido || 'N/A';
+            document.getElementById('fecha_entrega').textContent = parametros.fecha_entrega || 'N/A';
+            document.getElementById('direccion').textContent = parametros.direccion || 'N/A';
+            document.getElementById('persona_recibe').textContent = parametros.persona_recibe || 'N/A';
+            document.getElementById('rut_persona').textContent = parametros.rut_persona || 'N/A';
+            document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
         }
 
-        // Llamar a la función para actualizar los campos al cargar la página
-        window.onload = actualizarCampos;
+        // Cargar la información al cargar la página
+        window.onload = cargarInformacion;
     </script>
 </body>
 </html>
