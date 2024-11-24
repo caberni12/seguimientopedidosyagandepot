@@ -43,60 +43,39 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Texto de "Cargando Información" al lado del spinner */
-        .loading .text {
-            color: #fff;
-            font-size: 20px;
-            margin-left: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
         /* Animación de rotación para el spinner */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        h1 {
+        /* Sección para la fecha y título */
+        .top-section {
             text-align: center;
-            font-size: 28px;
-            color: #000;
-            margin-top: 40px;
-            text-transform: uppercase;
-            display: inline-block; /* Para que se pueda alinear con el logo */
-            margin-right: 20px;
-        }
-
-        /* Contenedor del logo y el título */
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-top: 20px;
         }
 
-        /* Estilo para la fecha */
-        .fecha-actual {
-            text-align: center;
-            font-size: 20px;
+        .top-section .date {
+            font-size: 18px;
             color: #333;
-            margin-bottom: 10px; /* Asegura que la fecha esté encima del título */
             font-weight: normal;
             text-transform: uppercase; /* Fecha en mayúsculas */
         }
 
-        /* Estilos para el logo */
-        .logo {
-            height: 50px; /* Ajusta el tamaño del logo */
-            margin-right: 10px; /* Espacio entre el logo y el título */
+        .top-section .header-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #000;
+            text-transform: uppercase;
+            margin-top: 10px;
         }
 
-        /* Estilo para el icono de transporte */
-        .transport-icon {
-            font-size: 80px; /* Tamaño del icono */
-            margin-right: 10px; /* Espacio entre el icono y el título */
-            color: #000; /* Color del icono */
+        .top-section .icon {
+            font-size: 90px; /* Tamaño del icono */
+            margin-right: 20px;
+            color: #000;
         }
 
         .timeline-container {
@@ -264,6 +243,15 @@
         <div class="text">Cargando Información...</div>
     </div>
 
+    <!-- Sección superior con la fecha y el título -->
+    <div class="top-section">
+        <div class="date" id="fecha-actual"></div>
+        <div class="header-title">
+            <div class="icon"><i class="fas fa-truck"></i></div>
+            <div>Centro de Distribución Yagandepot</div>
+        </div>
+    </div>
+
     <!-- Contenido de la página -->
     <div class="timeline-container" id="contenido-pedido" style="display: none;">
         <div class="timeline">
@@ -367,9 +355,18 @@
             }, 2500); // Esperar 2.5 segundos antes de ocultar el loading
         }
 
+        // Función para mostrar la fecha actual
+        function mostrarFechaActual() {
+            const fechaActual = new Date();
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+            document.getElementById('fecha-actual').textContent = fechaFormateada;
+        }
+
         // Cargar la información y la fecha actual al cargar la página
         window.onload = function() {
             cargarInformacion();
+            mostrarFechaActual();
             ocultarLoading();
         };
     </script>
