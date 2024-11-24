@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedidos Centro de Distribución Yagandepot Pudahuel</title>
-
-    <!-- Incluir Font Awesome para los iconos -->
+    <title>Seguimiento de Pedidos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Estilo general de la página */
+        /* Estilos generales */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #fff;
             color: #000;
             margin: 0;
             padding: 0;
             font-weight: bold;
-            text-transform: uppercase; /* Todo el texto en mayúsculas */
+            text-transform: uppercase;
         }
 
         h1 {
@@ -25,23 +23,13 @@
             color: #000;
             margin-top: 40px;
             text-transform: uppercase;
-            display: inline-block; /* Para que se pueda alinear con el logo */
-            margin-right: 20px;
         }
 
-        /* Contenedor del logo y el título */
         .header-container {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 20px;
-        }
-
-        /* Estilos para el icono de transporte */
-        .transport-icon {
-            font-size: 80px; /* Tamaño del icono */
-            margin-right: 10px; /* Espacio entre el icono y el título */
-            color: #000; /* Color del icono */
         }
 
         .fecha-actual {
@@ -50,7 +38,7 @@
             color: #333;
             margin-top: 10px;
             font-weight: normal;
-            text-transform: uppercase; /* Fecha en mayúsculas */
+            text-transform: uppercase;
         }
 
         .timeline-container {
@@ -61,7 +49,6 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(14, 13, 13, 0.1);
             padding: 20px;
-            display: none; /* Ocultamos inicialmente el contenido */
         }
 
         .timeline {
@@ -91,24 +78,15 @@
         }
 
         .timeline-item .icon {
-            background-color: transparent; /* Fondo transparente */
-            color: #000; /* Color del icono */
-            border-radius: 50%; /* Redondear los bordes para formar un círculo */
-            width: 70px; /* Tamaño del icono */
-            height: 70px; /* Tamaño del icono */
+            background-color: transparent;
+            color: #000;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 40px;
-            box-shadow: none; /* Eliminar sombra que forma el círculo alrededor del icono */
-            margin-right: 15px;
-        }
-
-        .timeline-item .separator {
-            height: 100%;
-            width: 3px;
-            background-color: #000;
-            margin: 0 20px;
         }
 
         .timeline-content {
@@ -120,125 +98,69 @@
             position: relative;
             width: 100%;
             color: #000;
-            text-transform: uppercase; /* Todo el texto en mayúsculas */
-        }
-
-        .en-ruta .timeline-content {
-            background-color: #fff;
-            color: #000;
-        }
-
-        .entregado .timeline-content {
-            background-color: #28a745; /* Fondo verde para "Entregado" */
-            color: #fff;
-        }
-
-        .pendiente .timeline-content {
-            background-color: #e3e309; /* Amarillo */
-            color: #000;
-        }
-
-        .timeline-content h3, .timeline-content h2 {
-            font-size: 22px;
-            margin: 0 0 10px;
-            font-weight: bold;
-            color: #000;
-            text-transform: uppercase;
-        }
-
-        .timeline-content p {
-            color: #000;
-            margin: 0 0 10px;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
         }
 
         .date {
             margin-top: 20px;
             font-size: 16px;
-            padding: 10px 15px;
-            text-transform: uppercase; /* Fecha en mayúsculas */
         }
-
-        /* Estilos para el loading con círculo giratorio */
+        
+        /* Estilo para el loading */
         #loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        .loading-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out; /* Transición suave para ocultar el loader */
         }
 
         /* Estilo del círculo giratorio */
-        .loading-content .spinner {
-            border: 4px solid transparent;
-            border-top: 4px solid #ff9900;
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            animation: spin 2.5s linear infinite;
+            width: 60px;
+            height: 60px;
+            animation: spin 2.5s linear infinite; /* Duración del giro: 2.5s */
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #333;
+            margin-left: 20px;
+            font-weight: bold;
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
     </style>
 </head>
 <body>
-
-    <!-- Pantalla de loading con círculo giratorio -->
+    <!-- Loader visible al principio -->
     <div id="loading">
-        <div class="loading-content">
-            <div class="spinner"></div>
-            <p>Cargando información...</p>
-        </div>
+        <div class="spinner"></div>
+        <div class="loading-text">Cargando Información...</div>
     </div>
 
-    <!-- Contenedor para logo y título -->
     <div class="header-container">
-        <h1>SEGUIMIENTO DE PEDIDOS CENTRO DE DISTRIBUCIÓN YAGANDEPOT PUDAHUEL</h1>
+        <h1>Seguimiento de Pedidos - Centro de Distribución Yagandepot Pudahuel</h1>
     </div>
-
-    <!-- Fecha actual -->
+    
     <div class="fecha-actual" id="fecha-actual"></div>
 
-    <!-- Contenedor del Timeline (solo se mostrará cuando se cargue la información) -->
-    <div class="timeline-container" id="contenido-pedido">
+    <div class="timeline-container">
         <div class="timeline">
-            <!-- Estado de Pedido: En Ruta -->
-            <div class="timeline-item en-ruta">
+            <div class="timeline-item">
                 <div class="icon">&#128230;</div>
-                <div class="separator"></div>
-                <div class="timeline-content en-ruta">
+                <div class="timeline-content">
                     <h2>Estado del Pedido: En Ruta</h2>
                     <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
                     <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
@@ -250,10 +172,8 @@
                 </div>
             </div>
 
-            <!-- Estado de Pedido: En Camino -->
             <div class="timeline-item">
                 <div class="icon">&#128666;</div>
-                <div class="separator"></div>
                 <div class="timeline-content">
                     <h2>Estado del Pedido: En Transito</h2>
                     <p>HORA DE SALIDA: <span id="hora_salida_camino"></span></p>
@@ -262,10 +182,9 @@
             </div>
 
             <!-- Estado Final del Pedido: Entregado -->
-            <div class="timeline-item entregado" id="contenido_entregado">
-                <div class="icon">&#128666;</div>
-                <div class="separator"></div>
-                <div class="timeline-content entregado">
+            <div class="timeline-item" id="contenido_entregado" style="display: none;">
+                <div class="icon">&#128230;</div>
+                <div class="timeline-content">
                     <h2>Pedido Entregado</h2>
                     <p>Status: <span id="status_pedido_entregado"></span></p>
                     <p>Fecha de Entrega: <span id="fecha_entrega"></span></p>
@@ -317,46 +236,19 @@
             document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
             document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
 
-            // Estado Final
-            document.getElementById('status_pedido_entregado').textContent = parametros.status_pedido || 'N/A';
-            document.getElementById('fecha_entrega').textContent = parametros.fecha_entrega || 'N/A';
-            document.getElementById('direccion').textContent = parametros.direccion || 'N/A';
-            document.getElementById('persona_recibe').textContent = parametros.persona_recibe || 'N/A';
-            document.getElementById('rut_persona').textContent = parametros.rut_persona || 'N/A';
-            document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
-
-            // Mostrar solo el intervalo de "Entregado" si el estado del pedido es "entregado"
-            if (parametros.status_pedido === 'entregado') {
+            // Estado Final: Mostrar solo si está "entregado"
+            if (parametros.status_pedido && parametros.status_pedido.toLowerCase() === 'entregado') {
                 document.getElementById('contenido_entregado').style.display = 'block';
-            } else {
-                document.getElementById('contenido_entregado').style.display = 'none';
             }
 
-            // Mostrar el contenido del pedido
-            document.getElementById('contenido-pedido').style.display = 'block';
-        }
-
-        // Función para mostrar la fecha actual en formato de texto
-        function obtenerFechaActual() {
-            const fecha = new Date();
-            const opciones = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            const fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
-            document.getElementById('fecha-actual').textContent = fechaFormateada;
-        }
-
-        // Función para ocultar el loading después de 2.5 segundos
-        function ocultarLoading() {
-            setTimeout(() => {
+            // Ocultar el loading después de 2.5 segundos
+            setTimeout(function() {
                 document.getElementById('loading').style.display = 'none';
-            }, 2500); // Espera de 2.5 segundos
+            }, 2500);
         }
 
-        // Llamada a la función para cargar la información y la fecha actual al cargar la página
-        window.onload = function() {
-            obtenerFechaActual(); // Mostrar la fecha actual
-            cargarInformacion();  // Cargar la información
-            ocultarLoading();     // Ocultar el loading
-        };
+        // Cargar la información al cargar la página
+        window.onload = cargarInformacion;
     </script>
 </body>
 </html>
