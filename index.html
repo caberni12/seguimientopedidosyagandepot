@@ -13,6 +13,7 @@
             margin: 0;
             padding: 0;
             font-weight: bold;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
         }
 
         h1 {
@@ -29,6 +30,7 @@
             color: #333;
             margin-top: 10px;
             font-weight: normal;
+            text-transform: uppercase; /* Fecha en mayúsculas */
         }
 
         .timeline-container {
@@ -97,16 +99,17 @@
             position: relative;
             width: 100%;
             color: #000;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
         }
 
         /* Estilos específicos por estado */
         .en-ruta .timeline-content {
-            background-color: #fff; /* Fondo blanco para "En Ruta" */
+            background-color: #fff;
             color: #000;
         }
 
         .entregado .timeline-content {
-            background-color: #10e714; /* Verde */
+            background-color: #10e714; /* Fondo verde para "Entregado" */
             color: #fff;
         }
 
@@ -120,6 +123,7 @@
             margin: 0 0 10px;
             font-weight: bold;
             color: #000;
+            text-transform: uppercase;
         }
 
         .timeline-content p {
@@ -127,12 +131,14 @@
             margin: 0 0 10px;
             font-size: 16px;
             font-weight: bold;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
         }
 
         .date {
             margin-top: 20px;
             font-size: 16px;
             padding: 10px 15px;
+            text-transform: uppercase; /* Fecha en mayúsculas */
         }
 
         /* Media Queries */
@@ -196,11 +202,6 @@
                 margin: 0 10px;
             }
         }
-
-        /* Estado "Entregado" oculto por defecto */
-        .estado-entregado {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -239,17 +240,20 @@
                 </div>
             </div>
 
-            <!-- Estado de Pedido: Entregado (Oculto por defecto) -->
-            <div class="timeline-item entregado estado-entregado" id="estado_entregado">
+            <!-- Estado de Pedido: Entregado (Siempre Visible) -->
+            <div class="timeline-item entregado">
                 <div class="icon">&#128230;</div>
                 <div class="separator"></div>
-                <div class="timeline-content entregado">
+                <div class="timeline-content entregado" id="contenido_entregado">
                     <h3>Estado del Pedido: Entregado</h3>
                     <p>Status: <span id="status_pedido_entregado"></span></p>
                     <p>Fecha de Entrega: <span id="fecha_entrega"></span></p>
                     <p>DIRECCION: <span id="direccion"></span></p>
+                    <p>Persona que recibe: <span id="persona_recibe"></span></p>
+                    <p>RUT Persona: <span id="rut_persona"></span></p>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -258,8 +262,6 @@
         function obtenerParametrosURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return {
-                hora_salida: urlParams.get('hora_salida'),
-                fecha_salida: urlParams.get('fecha_salida'),
                 nota_venta: urlParams.get('nota_venta'),
                 tipo_documento: urlParams.get('tipo_documento'),
                 factura: urlParams.get('factura'),
@@ -267,10 +269,14 @@
                 bultos: urlParams.get('bultos'),
                 responsable_entrega: urlParams.get('responsable_entrega'),
                 transporte: urlParams.get('transporte'),
-                status_pedido: urlParams.get('status_pedido'),
-                direccion: urlParams.get('direccion'),
                 observaciones: urlParams.get('observaciones'),
-                fecha_entrega: urlParams.get('fecha_entrega')
+                hora_salida: urlParams.get('hora_salida'),
+                fecha_salida: urlParams.get('fecha_salida'),
+                status_pedido: urlParams.get('status_pedido'),
+                fecha_entrega: urlParams.get('fecha_entrega'),
+                direccion: urlParams.get('direccion'),
+                persona_recibe: urlParams.get('persona_recibe'),
+                rut_persona: urlParams.get('rut_persona')
             };
         }
 
@@ -278,7 +284,7 @@
         function actualizarCampos() {
             const params = obtenerParametrosURL();
 
-            // Asignar los valores de los parámetros a los elementos HTML
+            // Actualizar "Estado del Pedido: En Ruta"
             document.getElementById('nota_venta').textContent = params.nota_venta || 'N/A';
             document.getElementById('tipo_documento').textContent = params.tipo_documento || 'N/A';
             document.getElementById('factura').textContent = params.factura || 'N/A';
@@ -288,30 +294,22 @@
             document.getElementById('transporte').textContent = params.transporte || 'N/A';
             document.getElementById('observaciones').textContent = params.observaciones || 'N/A';
 
-            // Actualizar el estado "En Camino"
+            // Actualizar "Estado del Pedido: En Camino"
             document.getElementById('hora_salida_camino').textContent = params.hora_salida || 'N/A';
             document.getElementById('fecha_salida_camino').textContent = params.fecha_salida || 'N/A';
 
-            // Actualizar el estado "Entregado"
+            // Actualizar "Estado del Pedido: Entregado"
             document.getElementById('status_pedido_entregado').textContent = params.status_pedido || 'N/A';
             document.getElementById('fecha_entrega').textContent = params.fecha_entrega || 'N/A';
             document.getElementById('direccion').textContent = params.direccion || 'N/A';
+            document.getElementById('persona_recibe').textContent = params.persona_recibe || 'N/A';
+            document.getElementById('rut_persona').textContent = params.rut_persona || 'N/A';
 
             // Mostrar la fecha actual
             const fechaActual = new Date();
             const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
             const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
             document.getElementById('fecha-actual').textContent = `Fecha Actual: ${fechaFormateada}`;
-
-            // Cambiar la visibilidad del estado "Entregado" según el STATUS
-            const estadoEntregado = document.getElementById('estado_entregado');
-            const estado = params.status_pedido;
-
-            if (estado === 'entregado') {
-                estadoEntregado.style.display = 'block'; // Mostrar cuando el estado es "Entregado"
-            } else {
-                estadoEntregado.style.display = 'none'; // Ocultar en otros estados
-            }
         }
 
         // Llamar a la función para actualizar los campos al cargar la página
