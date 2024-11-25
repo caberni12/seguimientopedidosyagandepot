@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedidos Región Metropolitana Departamento de Logistica de Centro Distribucion Yagandepot Pudahuel.</title>
+    <title>Seguimiento de Pedidos - Centro Distribución Yagandepot</title>
     <!-- Incluir Font Awesome para los iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -279,7 +279,12 @@
                 <div class="separator"></div>
                 <div class="timeline-content">
                     <h3>Pedido en Ruta</h3>
-                    <p>Fecha Estimada de Llegada: <span id="fecha_estimada_llegada">N/A</span></p>
+                    <p>Status: <span id="status_pedido_entregado">N/A</span></p>
+                    <p>Fecha de Entrega: <span id="fecha_entrega">N/A</span></p>
+                    <p>DIRECCION: <span id="direccion">N/A</span></p>
+                    <p>Persona que recibe: <span id="persona_recibe">N/A</span></p>
+                    <p>RUT Persona: <span id="rut_persona">N/A</span></p>
+                    <p>OBSERVACIONES: <span id="observaciones_final">No hay observaciones</span></p>
                 </div>
             </div>
 
@@ -289,7 +294,7 @@
                 <div class="separator"></div>
                 <div class="timeline-content">
                     <h3>Seguimiento de Pedido</h3>
-                    <p>Nota de Venta: <span id="nota_de_venta">N/A</span></p>
+                    <p>Nota de Venta: <span id="nota_venta">N/A</span></p>
                     <p>Tipo Documento: <span id="tipo_documento">N/A</span></p>
                     <p>Factura: <span id="factura">N/A</span></p>
                     <p>Cliente: <span id="cliente">N/A</span></p>
@@ -318,37 +323,76 @@
     </div>
 
     <script>
-        // Función para concatenar la URL
-        function obtenerUrlConParametros() {
-            // Aquí concatenas la URL con los parámetros que necesitas
-            const baseUrl = "https://example.com/seguimiento";
-            const parametro1 = "valor1";  // Ejemplo de parámetro
-            const parametro2 = "valor2";  // Otro parámetro
-
-            // Concatenación de parámetros a la URL
-            return `${baseUrl}?parametro1=${parametro1}&parametro2=${parametro2}`;
+        // Función para obtener los parámetros de la URL
+        function obtenerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                nota_venta: urlParams.get('nota_venta'),
+                tipo_documento: urlParams.get('tipo_documento'),
+                factura: urlParams.get('factura'),
+                cliente: urlParams.get('cliente'),
+                bultos: urlParams.get('bultos'),
+                responsable_entrega: urlParams.get('responsable_entrega'),
+                transporte: urlParams.get('transporte'),
+                hora_salida: urlParams.get('hora_salida'),
+                fecha_salida: urlParams.get('fecha_salida'),
+                status_pedido: urlParams.get('status_pedido'),
+                fecha_entrega: urlParams.get('fecha_entrega'),
+                direccion: urlParams.get('direccion'),
+                persona_recibe: urlParams.get('persona_recibe'),
+                rut_persona: urlParams.get('rut_persona'),
+                observaciones: urlParams.get('observaciones')
+            };
         }
 
-        // Función para mostrar el spinner y simular la carga de datos
-        function showLoading() {
-            document.getElementById("loading").style.display = "flex";
+        // Función para cargar la información en el HTML
+        function cargarInformacion() {
+            const parametros = obtenerParametrosURL();
+
+            // Rellenamos los datos de "Pedido Cargado en Centro de Distribución"
+            document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
+            document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
+
+            // Rellenamos los datos de "Seguimiento de Pedido"
+            document.getElementById('nota_venta').textContent = parametros.nota_venta || 'N/A';
+            document.getElementById('tipo_documento').textContent = parametros.tipo_documento || 'N/A';
+            document.getElementById('factura').textContent = parametros.factura || 'N/A';
+            document.getElementById('cliente').textContent = parametros.cliente || 'N/A';
+            document.getElementById('bultos').textContent = parametros.bultos || 'N/A';
+            document.getElementById('responsable_entrega').textContent = parametros.responsable_entrega || 'N/A';
+            document.getElementById('transporte').textContent = parametros.transporte || 'N/A';
+
+            // Rellenamos los datos de "Estado Final"
+            document.getElementById('status_pedido_entregado').textContent = parametros.status_pedido || 'N/A';
+            document.getElementById('fecha_entrega').textContent = parametros.fecha_entrega || 'N/A';
+            document.getElementById('direccion').textContent = parametros.direccion || 'N/A';
+            document.getElementById('persona_recibe').textContent = parametros.persona_recibe || 'N/A';
+            document.getElementById('rut_persona').textContent = parametros.rut_persona || 'N/A';
+            document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
+        }
+
+        // Función para ocultar el loading y mostrar el contenido después de 2.5 segundos
+        function ocultarLoading() {
             setTimeout(function() {
-                document.getElementById("loading").style.display = "none";
-                document.getElementById("contenido-pedido").style.display = "block";
-            }, 3000); // Simula 3 segundos de carga
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('contenido-pedido').style.display = 'block';
+                document.body.style.overflow = 'auto';  // Habilitar el scroll
+            }, 2500); // Esperar 2.5 segundos antes de ocultar el loading
         }
 
-        // Mostrar la carga cuando la página se carga
-        window.onload = function() {
-            showLoading();
-            // Mostrar la fecha actual en la parte superior
-            let today = new Date();
-            let options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('fecha-actual').textContent = today.toLocaleDateString('es-ES', options);
+        // Función para mostrar la fecha actual
+        function mostrarFechaActual() {
+            const fechaActual = new Date();
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+            document.getElementById('fecha-actual').textContent = fechaFormateada;
+        }
 
-            // Llamar a la función para obtener la URL con parámetros
-            const url = obtenerUrlConParametros();
-            console.log("URL generada:", url);
+        // Cargar la información y la fecha actual al cargar la página
+        window.onload = function() {
+            cargarInformacion();
+            mostrarFechaActual();
+            ocultarLoading();
         };
     </script>
 </body>
