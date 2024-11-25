@@ -147,22 +147,6 @@
             text-transform: uppercase; /* Todo el texto en mayúsculas */
         }
 
-        /* Estilos específicos por estado */
-        .en-ruta .timeline-content {
-            background-color: #fff;
-            color: #000;
-        }
-
-        .entregado .timeline-content {
-            background-color: #ffffff; /* Fondo verde para "Entregado" */
-            color: #fff;
-        }
-
-        .pendiente .timeline-content {
-            background-color: #e3e309; /* Amarillo */
-            color: #000;
-        }
-
         .timeline-content h3, .timeline-content h2 {
             font-size: 22px;
             margin: 0 0 10px;
@@ -234,6 +218,25 @@
                 padding: 12px;
             }
         }
+
+        /* Estilos específicos para cada intervalo */
+        .pedido-cargado {
+            background-color: #f2f2f2; /* Fondo gris claro */
+        }
+
+        .estado-en-ruta {
+            background-color: #ff0000; /* Fondo rojo */
+            color: white; /* Color del texto en blanco */
+        }
+
+        .seguimiento-pedido {
+            background-color: #ff6600; /* Fondo naranja */
+        }
+
+        .estado-final-pedido {
+            background-color: #00ff00; /* Fondo verde flúor */
+            color: black; /* Color del texto en negro para mejor legibilidad */
+        }
     </style>
 </head>
 <body>
@@ -255,37 +258,48 @@
     <!-- Contenido de la página -->
     <div class="timeline-container" id="contenido-pedido" style="display: none;">
         <div class="timeline">
-            <div class="timeline-item">
-                <div class="icon">&#128209;</div>
+
+            <!-- Intervalo Pedido Cargado en Centro de Distribución (con fondo gris) -->
+            <div class="timeline-item pedido-cargado">
+                <div class="icon"><i class="fas fa-warehouse"></i></div> <!-- Icono de Centro Logístico -->
                 <div class="separator"></div>
                 <div class="timeline-content">
-                    <h1>Seguimiento de Pedido</h1>
-                    <p>NOTA DE VENTA: <span id="nota_venta"></span></p>
-                    <p>TIPO DE DOCUMENTO: <span id="tipo_documento"></span></p>
-                    <p>FACTURA: <span id="factura"></span></p>
-                    <p>CLIENTE: <span id="cliente"></span></p>
-                    <p>BULTOS: <span id="bultos"></span></p>
+                    <h3>Pedido Cargado en Centro de Distribución</h3>
+                    <p>Hora de Salida: <span id="hora_salida_camino">N/A</span></p>
+                    <p>Fecha de Salida CD: <span id="fecha_salida_camino">N/A</span></p>
+                </div>
+            </div>
+
+            <!-- Intervalo Estado En Ruta (con fondo rojo) -->
+            <div class="timeline-item estado-en-ruta">
+                <div class="icon"><i class="fas fa-road"></i></div> <!-- Icono de Ruta -->
+                <div class="separator"></div>
+                <div class="timeline-content">
+                    <h3>Estado En Ruta</h3> <!-- Solo se muestra el título -->
+                </div>
+            </div>
+
+            <!-- Intervalo Seguimiento de Pedido (con fondo naranja) -->
+            <div class="timeline-item seguimiento-pedido">
+                <div class="icon"><i class="fas fa-truck-moving"></i></div>
+                <div class="separator"></div>
+                <div class="timeline-content">
+                    <h3>Seguimiento de Pedido</h3>
+                    <p>Nota de Venta: <span id="nota_venta"></span></p>
+                    <p>Tipo Documento: <span id="tipo_documento"></span></p>
+                    <p>Factura: <span id="factura"></span></p>
+                    <p>Cliente: <span id="cliente"></span></p>
+                    <p>Bultos: <span id="bultos"></span></p>
                     <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega"></span></p>
                     <p>TRANSPORTE: <span id="transporte"></span></p>
                 </div>
             </div>
 
-            <!-- Estado de En Ruta -->
-            <div class="timeline-item en-ruta">
-                <div class="icon">&#128666;</div> <!-- Icono de camión -->
+            <!-- Intervalo Estado Final del Pedido (con fondo verde flúor) -->
+            <div class="timeline-item estado-final-pedido">
+                <div class="icon"><i class="fas fa-box"></i></div>
                 <div class="separator"></div>
-                <div class="timeline-content" id="contenido_en_ruta">
-                    <h3>Estado En Ruta</h3>
-                    <p>Hora de Salida: <span id="hora_salida_camino"></span></p>
-                    <p>Fecha de Salida CD: <span id="fecha_salida_camino"></span></p>
-                </div>
-            </div>
-
-            <!-- Estado de Pedido: Entregado -->
-            <div class="timeline-item entregado">
-                <div class="icon">&#128230;</div>
-                <div class="separator"></div>
-                <div class="timeline-content entregado" id="contenido_entregado">
+                <div class="timeline-content">
                     <h3>Estado Final del Pedido</h3>
                     <p>Status: <span id="status_pedido_entregado"></span></p>
                     <p>Fecha de Entrega: <span id="fecha_entrega"></span></p>
@@ -295,6 +309,7 @@
                     <p>OBSERVACIONES: <span id="observaciones_final"></span></p>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -325,6 +340,11 @@
         function cargarInformacion() {
             const parametros = obtenerParametrosURL();
 
+            // Rellenamos los datos de "Pedido Cargado en Centro de Distribución"
+            document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
+            document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
+
+            // Rellenamos los datos de "Seguimiento de Pedido"
             document.getElementById('nota_venta').textContent = parametros.nota_venta || 'N/A';
             document.getElementById('tipo_documento').textContent = parametros.tipo_documento || 'N/A';
             document.getElementById('factura').textContent = parametros.factura || 'N/A';
@@ -333,11 +353,7 @@
             document.getElementById('responsable_entrega').textContent = parametros.responsable_entrega || 'N/A';
             document.getElementById('transporte').textContent = parametros.transporte || 'N/A';
 
-            // Estado de En Ruta
-            document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
-            document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
-
-            // Estado Final
+            // Rellenamos los datos de "Estado Final"
             document.getElementById('status_pedido_entregado').textContent = parametros.status_pedido || 'N/A';
             document.getElementById('fecha_entrega').textContent = parametros.fecha_entrega || 'N/A';
             document.getElementById('direccion').textContent = parametros.direccion || 'N/A';
