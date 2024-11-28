@@ -3,170 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de reserva de stock</title>
+    <title>Seguimiento de Pedidos - Centro Distribución Yagandepot</title>
+    <!-- Incluir Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Estilo general de la página */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+            color: #000;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        h1, h2 {
-            text-align: center;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        h2 {
             font-weight: bold;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
+            overflow: hidden; /* Evita el desplazamiento durante el loading */
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .form-container {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .form-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .form-container input,
-        .form-container select,
-        .form-container button {
-            width: 100%;
-            font-size: 16px;
-            padding: 12px;
-            text-align: center;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .form-container button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .form-container button:hover {
-            background-color: #45a049;
-        }
-
-        .action-button {
-            background-color: #007bff;
-            color: white;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin: 5px;
-        }
-
-        .action-button:hover {
-            background-color: #0056b3;
-        }
-
-        .finish-button {
-            background-color: #007bff;
-            color: white;
-            font-size: 18px;
-            padding: 15px 30px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .finish-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        .checkboxes-container {
-            display: flex;
-            justify-content: flex-start;
-            gap: 20px;
-            margin-top: 10px;
-        }
-
-        .checkboxes-container input {
-            margin-right: 10px;
-        }
-
-        .table-container {
-            width: 100%;
-            margin-top: 20px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            text-align: center;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        .completed {
-            background-color: #d4edda;
-        }
-
-        #total {
-            font-weight: bold;
-            font-size: 16px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #qrForm {
-            display: none;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #qrcode {
-            margin-top: 20px;
-            display: inline-block;
-        }
-
-        #qrcode-text {
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        .overlay {
+        /* Contenedor de loading */
+        .loading {
             position: fixed;
             top: 0;
             left: 0;
@@ -176,188 +30,365 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 24px;
-            z-index: 1000;
-            display: none;
+            z-index: 9999;
+            text-align: center;
         }
 
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ffffff;
+        .loading .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #000;
             border-radius: 50%;
             width: 50px;
             height: 50px;
             animation: spin 1s linear infinite;
         }
 
+        /* Animación de rotación para el spinner */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
+        /* Sección para la fecha y título */
+        .top-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .top-section .date {
+            font-size: 18px;
+            color: #333;
+            font-weight: normal;
+            text-transform: uppercase; /* Fecha en mayúsculas */
+        }
+
+        .top-section .header-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #000;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .top-section .icon {
+            font-size: 90px; /* Tamaño del icono */
+            margin-right: 20px;
+            color: #000;
+        }
+
+        .timeline-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(14, 13, 13, 0.1);
+            padding: 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background-color: #000;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 5px;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 3px solid #000; /* Borde grueso agregado */
+            border-radius: 8px; /* Bordes redondeados */
+            padding: 10px;
+        }
+
+        .timeline-item .icon {
+            background-color: transparent; /* Fondo transparente */
+            color: #000; /* Color del icono */
+            border-radius: 50%; /* Redondear los bordes para formar un círculo */
+            width: 70px; /* Tamaño del icono */
+            height: 70px; /* Tamaño del icono */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: none; /* Eliminar sombra que forma el círculo alrededor del icono */
+            margin-right: 15px;
+        }
+
+        .timeline-item .separator {
+            height: 100%;
+            width: 3px;
+            background-color: #000;
+            margin: 0 20px;
+        }
+
+        .timeline-content {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-left: 30px;
+            position: relative;
+            width: 100%;
+            color: #000;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
+        }
+
+        .timeline-content h3, .timeline-content h2 {
+            font-size: 22px;
+            margin: 0 0 10px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .timeline-content p {
+            color: #000;
+            margin: 0 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase; /* Todo el texto en mayúsculas */
+        }
+
+        .date {
+            margin-top: 20px;
+            font-size: 16px;
+            padding: 10px 15px;
+            text-transform: uppercase; /* Fecha en mayúsculas */
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .timeline-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+                padding-left: 12px;
+            }
+
+            .timeline::before {
+                left: 20px;
+                width: 3px;
+            }
+
+            .timeline-item .date {
+                font-size: 14px;
+                margin-top: 15px;
+            }
+
+            .icon {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+
+            .separator {
+                margin: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timeline-container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline-content {
+                padding: 12px;
+            }
+        }
+
+        /* Estilos específicos para cada intervalo */
+        .pedido-cargado {
+            background-color: #a09f9f; /* Fondo gris claro */
+        }
+
+        .estado-en-ruta {
+            background-color: #ff0000; /* Fondo rojo */
+            color: rgb(248, 7, 7); /* Color del texto en blanco */
+        }
+
+        .seguimiento-pedido {
+            background-color: #ff6600; /* Fondo naranja */
+        }
+
+        .estado-final-pedido {
+            background-color: #00ff00; /* Fondo verde flúor */
+            color: black; /* Color del texto en negro para mejor legibilidad */
+        }
     </style>
 </head>
-<body onload="initPage()">
+<body>
+    <!-- Spinner de carga con texto -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="text">Cargando Información...</div>
+    </div>
 
-<h1>RESERVA DE STOCK</h1>
-<h2 id="numeroReservaTitulo">Número de reserva: </h2>
-
-<div class="container">
-
-    <div class="form-container">
-        <div>
-            <label for="searchInput">Consulta de reserva stock</label><br>
-            <input type="text" id="searchInput" placeholder="Buscar por número de reserva" oninput="updateNumeroReserva()" />
-        </div>
-        <div>
-            <label for="notaVentaInput">Número de nota de venta</label><br>
-            <input type="text" id="notaVentaInput" placeholder="Número de nota de venta" />
-        </div>
-        <div>
-            <label for="pikeador">Seleccionar Pikeador:</label><br>
-            <select id="pikeadorSelect">
-                <option value="">Seleccione un Pikeador</option>
-            </select><br>
-            <input type="text" id="newPikeadorInput" placeholder="Agregar nuevo Pikeador" oninput="checkPikeadorInput()" />
-            <button id="addPikeadorButton" class="action-button" onclick="addPikeador()" disabled>Agregar Pikeador</button>
+    <!-- Sección superior con la fecha y el título -->
+    <div class="top-section">
+        <div class="date" id="fecha-actual"></div>
+        <div class="header-title">
+            <div class="icon"><i class="fas fa-truck"></i></div>
+            <div>Centro de Distribución Yagandepot</div>
         </div>
     </div>
 
-    <div class="checkboxes-container">
-        <label><input type="checkbox" id="pendienteCheckbox" onchange="filterByState()"> Pendiente</label>
-        <label><input type="checkbox" id="terminadoCheckbox" onchange="filterByState()"> Terminado</label>
+    <!-- Contenido de la página -->
+    <div class="timeline-container" id="contenido-pedido" style="display: none;">
+        <div class="timeline">
+
+            <!-- Intervalo Pedido Cargado en Centro de Distribución (con fondo gris) -->
+            <div class="timeline-item pedido-cargado">
+                <div class="icon"><i class="fas fa-warehouse"></i></div> <!-- Icono de Centro Logístico -->
+                <div class="separator"></div>
+                <div class="timeline-content">
+                    <h3>Pedido Cargado en Centro de Distribución</h3>
+                    <p>Hora de Salida: <span id="hora_salida_camino">N/A</span></p>
+                    <p>Fecha de Salida CD: <span id="fecha_salida_camino">N/A</span></p>
+                </div>
+            </div>
+
+            <!-- Intervalo Pedido en Ruta (con fondo rojo) -->
+            <div class="timeline-item estado-en-ruta">
+                <div class="icon"><i class="fas fa-route"></i></div> <!-- Icono de En Ruta -->
+                <div class="separator"></div>
+                <div class="timeline-content">
+                    <h3>Pedido en Ruta hacia destinatario</h3>
+                    <p>Status: <span id="status_pedido_entregado">N/A</span></p>
+                </div>
+            </div>
+
+            <!-- Intervalo Seguimiento del Pedido (con fondo naranja) -->
+            <div class="timeline-item seguimiento-pedido">
+                <div class="icon"><i class="fas fa-clock"></i></div> <!-- Icono de Seguimiento -->
+                <div class="separator"></div>
+                <div class="timeline-content">
+                    <h3>Seguimiento de Pedido</h3>
+                    <p>Nota de Venta: <span id="nota_venta">N/A</span></p>
+                    <p>Tipo Documento: <span id="tipo_documento">N/A</span></p>
+                    <p>Factura: <span id="factura">N/A</span></p>
+                    <p>Cliente: <span id="cliente">N/A</span></p>
+                    <p>Bultos: <span id="bultos">N/A</span></p>
+                    <p>RESPONSABLE DE ENTREGA: <span id="responsable_entrega">N/A</span></p>
+                    <p>TRANSPORTE: <span id="transporte">N/A</span></p>
+                </div>
+            </div>
+
+            <!-- Intervalo Estado Final del Pedido (con fondo verde) -->
+            <div class="timeline-item estado-final-pedido">
+                <div class="icon"><i class="fas fa-check-circle"></i></div> <!-- Icono de Entregado -->
+                <div class="separator"></div>
+                <div class="timeline-content">
+                    <h3>Status final del Pedido</h3>
+                    <p>Status: <span id="status_pedido_entregado">N/A</span></p>
+                    <p>Fecha de Entrega: <span id="fecha_entrega">N/A</span></p>
+                    <p>DIRECCION: <span id="direccion">N/A</span></p>
+                    <p>Persona que recibe: <span id="persona_recibe">N/A</span></p>
+                    <p>RUT Persona: <span id="rut_persona">N/A</span></p>
+                    <p>OBSERVACIONES: <span id="observaciones_final">No hay observaciones</span></p>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="table-container">
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th>Línea</th>
-                    <th>Código</th>
-                    <th>Artículo</th>
-                    <th>Stock</th>
-                    <th>Por preparar</th>
-                    <th>Unidades preparadas</th>
-                    <th>Estado</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="linea1">
-                    <td>1</td>
-                    <td>ABC123</td>
-                    <td>Artículo A</td>
-                    <td>50</td>
-                    <td>30</td>
-                    <td><input type="number" id="unidadesPreparadas1" value="0" onchange="updateUnidadesPreparadas(1)" min="0" /></td>
-                    <td><span id="estado1">Pendiente</span></td>
-                    <td><button class="action-button" onclick="changeState(1)">Marcar como Terminado</button></td>
-                </tr>
-                <tr id="linea2">
-                    <td>2</td>
-                    <td>DEF456</td>
-                    <td>Artículo B</td>
-                    <td>100</td>
-                    <td>80</td>
-                    <td><input type="number" id="unidadesPreparadas2" value="0" onchange="updateUnidadesPreparadas(2)" min="0" /></td>
-                    <td><span id="estado2">Pendiente</span></td>
-                    <td><button class="action-button" onclick="changeState(2)">Marcar como Terminado</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <button class="finish-button" id="finishButton" onclick="finishProcess()" disabled>Terminar todo el proceso</button>
-    
-    <div id="total">Total unidades preparadas: <span id="totalUnidades">0</span></div>
-    
-    <div id="qrForm">
-        <h3 id="numeroReservaTituloFinal"></h3>
-        <div id="qrcode"></div>
-        <div id="qrcode-text"></div>
-    </div>
-
-</div>
-
-<div id="loadingOverlay" class="overlay">
-    <div class="spinner"></div>
-    <div>Generando código QR...</div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-
-<script>
-    let qrGenerated = false; // Variable para controlar si el QR ya fue generado
-
-    function initPage() {
-        document.getElementById("finishButton").disabled = true;
-    }
-
-    function updateNumeroReserva() {
-        var numeroReserva = document.getElementById('searchInput').value;
-        document.getElementById('numeroReservaTitulo').textContent = "Número de reserva: " + numeroReserva;
-    }
-
-    function finishProcess() {
-        if (qrGenerated) return;  // Si ya se generó el QR, no hacer nada
-        var numeroReserva = document.getElementById('searchInput').value;
-        var numeroNotaVenta = document.getElementById('notaVentaInput').value;
-        showLoading();
-        setTimeout(function () {
-            hideLoading();
-            generateQRCode(numeroReserva, numeroNotaVenta);  // Generar el QR
-            document.getElementById('qrForm').style.display = 'block'; // Mostrar QR y mensaje
-            document.getElementById('numeroReservaTituloFinal').textContent = "Número de reserva Terminado: " + numeroReserva;
-            qrGenerated = true;  // Marcar que el QR ha sido generado
-            document.getElementById('finishButton').disabled = true;  // Desactivar el botón
-        }, 2000); // Simula un proceso de 2 segundos
-    }
-
-    function generateQRCode(numeroReserva, numeroNotaVenta) {
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: "NV" + numeroReserva + "|RS" + numeroNotaVenta,
-            width: 256,
-            height: 256,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-    }
-
-    function showLoading() {
-        document.getElementById("loadingOverlay").style.display = "flex";
-    }
-
-    function hideLoading() {
-        document.getElementById("loadingOverlay").style.display = "none";
-    }
-
-    function changeState(lineNumber) {
-        var estadoElement = document.getElementById('estado' + lineNumber);
-        var estadoButton = document.querySelectorAll('#linea' + lineNumber + ' .action-button')[0];
-        if (estadoElement.textContent === 'Pendiente') {
-            estadoElement.textContent = 'Terminado';
-            estadoButton.style.backgroundColor = '#28a745';
-            estadoButton.textContent = 'Marcar como Pendiente';
-        } else {
-            estadoElement.textContent = 'Pendiente';
-            estadoButton.style.backgroundColor = '#007bff';
-            estadoButton.textContent = 'Marcar como Terminado';
+    <script>
+        // Función para obtener los parámetros de la URL
+        function obtenerParametrosURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                nota_venta: urlParams.get('nota_venta'),
+                tipo_documento: urlParams.get('tipo_documento'),
+                factura: urlParams.get('factura'),
+                cliente: urlParams.get('cliente'),
+                bultos: urlParams.get('bultos'),
+                responsable_entrega: urlParams.get('responsable_entrega'),
+                transporte: urlParams.get('transporte'),
+                hora_salida: urlParams.get('hora_salida'),
+                fecha_salida: urlParams.get('fecha_salida'),
+                status_pedido: urlParams.get('status_pedido'),
+                fecha_entrega: urlParams.get('fecha_entrega'),
+                direccion: urlParams.get('direccion'),
+                persona_recibe: urlParams.get('persona_recibe'),
+                rut_persona: urlParams.get('rut_persona'),
+                observaciones: urlParams.get('observaciones')
+            };
         }
-    }
 
-    function updateUnidadesPreparadas(lineNumber) {
-        var unidadesPreparadas = parseInt(document.getElementById('unidadesPreparadas' + lineNumber).value);
-        var totalUnidades = parseInt(document.getElementById('totalUnidades').textContent);
-        totalUnidades += unidadesPreparadas;
-        document.getElementById('totalUnidades').textContent = totalUnidades;
-        if (totalUnidades > 0) {
-            document.getElementById("finishButton").disabled = false;
+        // Función para cargar la información en el HTML
+        function cargarInformacion() {
+            const parametros = obtenerParametrosURL();
+
+            // Rellenamos los datos de "Pedido Cargado en Centro de Distribución"
+            document.getElementById('hora_salida_camino').textContent = parametros.hora_salida || 'N/A';
+            document.getElementById('fecha_salida_camino').textContent = parametros.fecha_salida || 'N/A';
+
+            // Rellenamos los datos de "Seguimiento de Pedido"
+            document.getElementById('nota_venta').textContent = parametros.nota_venta || 'N/A';
+            document.getElementById('tipo_documento').textContent = parametros.tipo_documento || 'N/A';
+            document.getElementById('factura').textContent = parametros.factura || 'N/A';
+            document.getElementById('cliente').textContent = parametros.cliente || 'N/A';
+            document.getElementById('bultos').textContent = parametros.bultos || 'N/A';
+            document.getElementById('responsable_entrega').textContent = parametros.responsable_entrega || 'N/A';
+            document.getElementById('transporte').textContent = parametros.transporte || 'N/A';
+
+            // Rellenamos los datos de "Estado Final"
+            document.getElementById('status_pedido_entregado').textContent = parametros.status_pedido || 'N/A';
+            document.getElementById('fecha_entrega').textContent = parametros.fecha_entrega || 'N/A';
+            document.getElementById('direccion').textContent = parametros.direccion || 'N/A';
+            document.getElementById('persona_recibe').textContent = parametros.persona_recibe || 'N/A';
+            document.getElementById('rut_persona').textContent = parametros.rut_persona || 'N/A';
+            document.getElementById('observaciones_final').textContent = parametros.observaciones || 'No hay observaciones';
         }
-    }
-</script>
 
+        // Función para ocultar el loading y mostrar el contenido después de 2.5 segundos
+        function ocultarLoading() {
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('contenido-pedido').style.display = 'block';
+                document.body.style.overflow = 'auto';  // Habilitar el scroll
+            }, 2500); // Esperar 2.5 segundos antes de ocultar el loading
+        }
+
+        // Función para mostrar la fecha actual
+        function mostrarFechaActual() {
+            const fechaActual = new Date();
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+            document.getElementById('fecha-actual').textContent = fechaFormateada;
+        }
+
+        // Cargar la información y la fecha actual al cargar la página
+        window.onload = function() {
+            cargarInformacion();
+            mostrarFechaActual();
+            ocultarLoading();
+        };
+    </script>
 </body>
 </html>
